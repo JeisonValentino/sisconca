@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div id="modalDatoComercial"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h:form id="formDatoComercial" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Datos Comerciales 
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">
+                                        Información
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />                                                                        
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombre" class="col-sm-4 control-label">
+                                                    Ruc (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        required="true"
+                                                        value="#{datoComercialControlador.datoComercialModificar.ruc}"
+                                                        class="form-control"
+                                                        id="txtNombre"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtGiro" class="col-sm-4 control-label">
+                                                    Giro
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{datoComercialControlador.datoComercialModificar.idGiro.id}"
+                                                        id="txtGiro2"
+                                                        >
+                                                        <f:selectItems value="#{datoComercialControlador.listaGiro}"
+                                                                       var="giro"
+                                                                       itemLabel="#{giro.descripcion}"
+                                                                       itemValue="#{giro.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtRazonSocial" class="col-sm-4 control-label">
+                                                    Razon Social
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        required="true"
+                                                        value="#{datoComercialControlador.datoComercialModificar.razonSocial}"
+                                                        class="form-control"
+                                                        id="txtRazonSocial"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtDireccion" class="col-sm-4 control-label">
+                                                    Direccion
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        required="true"
+                                                        value="#{datoComercialControlador.datoComercialModificar.direccion}"
+                                                        class="form-control"
+                                                        id="txtDireccion"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtReferencia" class="col-sm-4 control-label">
+                                                    Referencia
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        required="true"
+                                                        value="#{datoComercialControlador.datoComercialModificar.referencia}"
+                                                        class="form-control"
+                                                        id="txtReferencia"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTelefono" class="col-sm-4 control-label">
+                                                    Telefono
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        required="true"
+                                                        value="#{datoComercialControlador.datoComercialModificar.telefono}"
+                                                        class="form-control"
+                                                        id="txtTelefono"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtLinea" class="col-sm-4 control-label">
+                                                    Linea Crediro
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        required="true"
+                                                        value="#{datoComercialControlador.datoComercialModificar.lineaCredrito}"
+                                                        class="form-control"
+                                                        id="txtLinea"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTipoVivienda" class="col-sm-4 control-label">
+                                                    Local
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{datoComercialControlador.datoComercialModificar.idTipoVivienda.id}"
+                                                        id="txtGiro"
+                                                        >
+                                                        <f:selectItems value="#{datoComercialControlador.listaTipoVivienda}"
+                                                                       var="tipoVivienda"
+                                                                       itemLabel="#{tipoVivienda.nombre}"
+                                                                       itemValue="#{tipoVivienda.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtAval" class="col-sm-4 control-label">
+                                                    Aval
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{datoComercialControlador.datoComercialModificar.aval}"
+                                                        id="txtAval"
+                                                        >
+                                                        <f:selectItems value="#{datoComercialControlador.listaCliente}"
+                                                                       var="cliente"
+                                                                       itemLabel="#{cliente.nombreCompleto}"
+                                                                       itemValue="#{cliente.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="booleanBtn" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtn"
+                                                                           value="#{datoComercialControlador.estadoDatoComercial}"
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{datoComercialControlador.actualizarDatoComercial()}"
+                                        >
+                            Modificar Dato Comerciales
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

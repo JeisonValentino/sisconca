@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+    <div id="addRenewalModalContainer"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog" style="width: 70%">
+            <div class="modal-content">
+                <h:form id="formNewRenewal" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Nueva Renovación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label for="number" class="col-sm-4 control-label">Número</label>
+                                                        <div class="col-sm-4">
+                                                            <h:inputText 
+                                                                label="number"
+                                                                disabled="true"
+                                                                value="#{renewalController.newRenewal.prestamoPorRenovacion.id}"
+                                                                class="form-control"
+                                                                id="number">
+                                                            </h:inputText>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label for="renewalDate" class="col-sm-4 control-label">Fecha</label>
+                                                        <div class="col-sm-8">
+                                                            <p:calendar id="renewalDate" 
+                                                                        disabled="true"
+                                                                        value="#{renewalController.newRenewal.prestamoPorRenovacion.fecha}" readonlyInput="true" pattern="MM/dd/yyyy" >
+                                                                <p:ajax event="blur"/>
+                                                            </p:calendar>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">&nbsp;</div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="cliente" class="col-sm-4 control-label">
+                                                                Cliente
+                                                            </label>
+                                                            <div class="col-sm-6">
+                                                                <h:selectOneMenu
+                                                                    class="form-control"
+                                                                    disabled="true"
+                                                                    value="#{renewalController.newRenewal.prestamoPorRenovacion.idCliente.id}"
+                                                                    id="txtCliente"
+                                                                    >
+                                                                    <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{renewalController.clientes}"
+                                                                                   var="cliente"
+                                                                                   itemLabel="#{cliente.nombreCompleto}"
+                                                                                   itemValue="#{cliente.id}"/>
+                                                                </h:selectOneMenu>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="tipoPrestamo" class="col-sm-4 control-label">Tipo Prestamo</label>
+                                                            <div class="col-sm-6">
+                                                                <h:selectOneMenu
+                                                                    class="form-control"
+                                                                    disabled="true"
+                                                                    value="#{renewalController.newRenewal.prestamoPorRenovacion.idTipoPrestamo.id}"
+                                                                    id="txtTipoPrestamo"
+                                                                    >
+                                                                    <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{renewalController.tipoPrestamoList}"
+                                                                                   var="tipoPrestamo"
+                                                                                   itemLabel="#{tipoPrestamo.nombre}"
+                                                                                   itemValue="#{tipoPrestamo.id}"/>
+                                                                    <p:ajax event="change" listener="#{renewalController.updateTipoPrestamo}"
+                                                                            update="formNewRenewal:time,formNewRenewal:rate,formNewRenewal:quote"/>
+                                                                </h:selectOneMenu>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row ">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="time" class="col-sm-4 control-label">Tiempo</label>
+                                                            <div class="col-sm-4">
+                                                                <h:inputText 
+                                                                    disabled="true"
+                                                                    label="Time"
+                                                                    value="#{renewalController.newRenewal.prestamoPorRenovacion.idTipoPrestamo.tiempo}"
+                                                                    class="form-control"
+                                                                    id="time">
+                                                                </h:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="rate" class="col-sm-4 control-label">Interés</label>
+                                                            <div class="col-sm-4">
+                                                                <h:inputText 
+                                                                    label="Interes"
+                                                                    disabled="true"
+                                                                    value="#{renewalController.newRenewal.prestamoPorRenovacion.idTipoPrestamo.interes}"
+                                                                    class="form-control"
+                                                                    id="rate">
+                                                                    <!--<p:ajax event="change" listener="#{renewalController.calculateAmounts}" />-->
+                                                                </h:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row ">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="quote" class="col-sm-4 control-label">Cuotas</label>
+                                                            <div class="col-sm-4">
+                                                                <h:inputText 
+                                                                    disabled="true"
+                                                                    label="Cuotas"
+                                                                    value="#{renewalController.newRenewal.prestamoPorRenovacion.cuota}"
+                                                                    class="form-control"
+                                                                    id="quote">
+                                                                    <f:convertNumber pattern="#,##0.00"/>
+                                                                </h:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="cobro" class="col-sm-4 control-label">Cobro</label>
+                                                            <div class="col-sm-3">
+                                                                <h:inputText
+                                                                    label="cobro"
+                                                                    disabled="true"
+                                                                    value="#{renewalController.newRenewal.prestamoPorRenovacion.frecuencia}"
+                                                                    class="form-control"
+                                                                    id="cobro">
+                                                                </h:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row col-md-12">
+                                                    <div>
+                                                        <h4 class="modal-title">Nueva Renovación</h4>
+                                                    </div>
+                                                    <p:panel id="carDetail" style="text-align:center;">
+                                                        <p:panelGrid  columns="4">
+                                                            <h:outputText value="Número"/>
+                                                            <h:outputText value="Cliente" />
+                                                            <h:outputText value="Saldo" />
+                                                            <h:outputText value="Importe" />
+                                                            <h:outputText value="#{renewalController.newRenewal.prestamoOrigenRenovacion.id}" />
+                                                            <h:outputText value="#{renewalController.newRenewal.prestamoOrigenRenovacion.idCliente.nombreCompleto}" />
+                                                            <h:outputText value="#{renewalController.newRenewal.saldo}"/>
+                                                            <h:inputText value="#{renewalController.newRenewal.prestamoPorRenovacion.prestamo}">
+                                                                <p:ajax event="change" listener="#{renewalController.changeQuotas}"/>
+                                                            </h:inputText>
+                                                        </p:panelGrid>
+                                                    </p:panel>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-success" actionListener="#{renewalController.edit}">
+                            Guardar
+                        </p:commandLink>
+                        <button type="button" class="btn btn-danger"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <section class="content-header">
+        <h1>
+            Tipo de Cambio
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard">
+                    </i> Inicio
+                </a>
+            </li>
+            <li class="active">Tipo de Cambio</li>
+        </ol>
+    </section>
+
+    <section  class="content">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <p:commandButton
+                            title="Al presionar, se mostrara un panel al lado derecho de la pantalla en donde se podra realizar busquedas personalizadas."
+                            onclick="agregarControlSidebarABody();"
+                            actionListener="#"
+                            value="Mostrar Filtro"
+                            icon="fa fa-eye"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                        <p:commandButton
+                            title="Al presiona, se actualizara la lista de tipo de cambio."
+                            actionListener="#{tipoCambioControlador.iniciarListaTipoCambio()}"
+                            value="Actualizar Registros"
+                            icon="fa fa-refresh"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h:form id="formListaTipoCambio">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">
+                                    Lista de Tipo de Cambio
+                                </h3>
+                                <div class="box-tools pull-right">
+                                    <p:commandLink
+                                        actionListener="#{tipoCambioControlador.mostrarModalAgregarTipoCambio()}"
+                                        class="btn btn-success"
+                                        rendered="#{navegadorControlador.usuario_Lista}"
+                                        >
+                                        <i class="fa fa-plus"/> Agregar Tipo de Cambio
+                                    </p:commandLink>
+                                </div>
+                            </div>
+                            <div class="box-body" style="display: block;">
+                                <p:dataTable id="dataTableTipoCambio" var="tipoCambio" lazy="true" value="#{tipoCambioControlador.listaLazyTipoCambio}" rows="10" paginator="true" reflow="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index"
+                                         rowsPerPageTemplate="10,20,50,100" paginatorPosition="bottom" emptyMessage="No se encontró resultados">
+                               
+                                    <f:facet name="header">
+                                        <h:outputText value="Lista de Tipo de Cambio"/>
+                                    </f:facet>
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <p:graphicImage 
+                                                value="resources/imagenes/iconos/excel.png"
+                                                width="24"/>
+                                            <pe:exporter type="xlsx"
+                                                         postProcessor="#{utilitarioControlador.personalizarExcel}"
+                                                         target="dataTableTipoCambio"
+                                                         fileName="Tipo de Cambio Listado" />
+                                        </h:commandLink>
+
+                                        <h:commandLink>
+                                            <p:graphicImage 
+                                                value="resources/imagenes/iconos/pdf.png" 
+                                                width="24"/>
+                                            <pe:exporter type="pdf" encoding="cp1250" preProcessor="#{utilitarioControlador.personalizarPdf}" 
+                                                         facetBackground="#af6114" 
+                                                         facetFontColor="#FFFFFF"  
+
+                                                         target="dataTableTipoCambio" 
+                                                         fileName="Tipo de Cambio Listado"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                                    <p:column 
+                                        exportable="false"
+                                        width="30"
+                                        headerText="#">
+                                        #{index + 1}
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Fecha"/>
+                                        </f:facet>
+                                        <h:outputText value="#{tipoCambio.fecha}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Tipo Moneda"/>
+                                        </f:facet>
+                                        
+                                        <h:selectOneMenu
+                                            class="form-control"
+                                            value="#{tipoCambio.tipoMoneda}"
+                                            id="tipoMoneda"
+                                            disabled="true"
+                                            >
+                                            <f:selectItem
+                                                itemValue="2"
+                                                itemLabel="DOLARES"/>
+                                            <f:selectItem
+                                                itemValue="3"
+                                                itemLabel="EUROS"/>
+                                        </h:selectOneMenu>
+                                    </p:column>
+
+                                    
+                                    <p:column
+                                        style="text-align: center"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="TC Compra"/>
+                                        </f:facet>
+                                        <h:outputText value="#{tipoCambio.tipoCambioCompra}"/>
+                                    </p:column>
+                                    <p:column
+                                        style="text-align: center"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="TC Venta"/>
+                                        </f:facet>
+                                        <h:outputText value="#{tipoCambio.tipoCambioVenta}"/>
+                                    </p:column>
+                                    <!-- CAMBIAR ID DE PERMISO EN BASE DE DATOS-->   
+                                    <p:column
+                                        exportable="false"
+                                        width="40"
+                                        style="text-align: center"
+                                        rendered="#{navegadorControlador.usuario_Lista}"
+                                        >
+                                        <p:commandLink
+                                            actionListener="#{tipoCambioControlador.mostrarModalModificarTipoCambio(tipoCambio)}"
+                                            title="Modificar Tipo Cambio"
+                                            >
+                                            <i class="fa fa-pencil"/>
+                                        </p:commandLink>
+                                    </p:column>
+                                    <p:column
+                                        exportable="false"
+                                        width="40"
+                                        style="text-align: center"
+                                        rendered="#{navegadorControlador.usuario_Lista}"
+                                        >
+
+                                    </p:column>
+
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div jsf:id="divModalTipoCambio">
+        <ui:include src="#{tipoCambioControlador.contenidoModalTipoCambio}"/>
+    </div>
+
+</ui:composition>

@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <section class="content-header">
+        <h1>
+            Auditoria (Renovación)
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard">
+                    </i> Inicio
+                </a>
+            </li>
+            <li class="active">Auditoria (Renovación)</li>
+        </ol>
+    </section>
+
+    <section  class="content">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <p:commandButton
+                            title="Al presionar, se mostrara un panel al lado derecho de la pantalla en donde se podra realizar busquedas personalizadas."
+                            onclick="agregarControlSidebarABody();"
+                            actionListener="#"
+                            value="Mostrar Filtro"
+                            icon="fa fa-eye"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                        <p:commandButton
+                            title="Al presiona, se actualizara la lista de auditoria."
+                            actionListener="#{auditoriaControlador.iniciarListaAuditoriaRenovacion()}"
+                            value="Actualizar Registros"
+                            icon="fa fa-refresh"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h:form id="formListaAuditoria">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">
+                                    Lista de Auditoria
+                                </h3>
+                                
+                            </div>
+                            <div class="box-body" style="display: block;">
+                                <p:dataTable
+                                    id="dataTableAuditoria"
+                                    reflow="true"
+                                    rowIndexVar="index"
+                                    lazy="true"
+                                    rows="10" 
+                                    paginator="true"
+                                    paginatorPosition="bottom"
+                                    currentPageReportTemplate="Total Registros ( {totalRecords} )"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                    {PreviousPageLink} {PageLinks} {NextPageLink} 
+                                    {LastPageLink} {RowsPerPageDropdown}  {Exporters}"
+                                    rowsPerPageTemplate="10,20,50,100"
+                                    value="#{auditoriaControlador.listaLazyAuditoriaRenovacion}"
+                                    rendered="#{navegadorControlador.usuario_Lista}"
+                                    var="auditoria"
+                                    >
+                                    <f:facet name="header">
+                                        <h:outputText value="Lista de Auditoria"/>
+                                    </f:facet>
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <p:graphicImage 
+                                                value="resources/imagenes/iconos/excel.png"
+                                                width="24"/>
+                                            <pe:exporter type="xlsx"
+                                                         postProcessor="#{utilitarioControlador.personalizarExcel}"
+                                                         target="dataTableAuditoria"
+                                                         fileName="Auditoria Listado" />
+                                        </h:commandLink>
+                                        <h:commandLink>
+                                            <p:graphicImage 
+                                                value="resources/imagenes/iconos/pdf.png" 
+                                                width="24"/>
+                                            <pe:exporter orientation="Landscape" type="pdf" encoding="cp1250" preProcessor="#{utilitarioControlador.personalizarPdf}" 
+                                                         facetBackground="#af6114" 
+                                                         facetFontColor="#FFFFFF"  
+
+                                                         target="dataTableAuditoria" 
+                                                         fileName="Auditoria Listado"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                                    <p:column 
+                                        exportable="false"
+                                        width="30"
+                                        headerText="#">
+                                        #{index + 1}
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Tipo"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.idSede.nombre}"/>
+                                    </p:column>
+                                    
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Usuario"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.usuarioId.nombre}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Empleado"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.usuarioId.idEmpleado.nombreCompleto}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Fecha del Evento"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.fechaOperacion}"/>
+                                    </p:column>
+                                    
+                                    <p:column
+                                        visible="false"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Operacion"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.tipoOperacion}"/>
+                                    </p:column>
+                                    
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Operacion"/>
+                                        </f:facet>
+                                        <h:selectOneMenu
+                                            class="form-control"
+                                            value="#{auditoria.tipoOperacion}"
+                                            id="tipoOperacion"
+                                            disabled="true"
+                                            >
+                                            <f:selectItem
+                                                itemValue="I"
+                                                itemLabel="INGRESO"/>
+                                            <f:selectItem
+                                                itemValue="O"
+                                                itemLabel="OPCION"/>
+                                            <f:selectItem
+                                                itemValue="R"
+                                                itemLabel="REGISTRO"/>
+                                            <f:selectItem
+                                                itemValue="M"
+                                                itemLabel="MODIFICACION"/>
+                                            <f:selectItem
+                                                itemValue="E"
+                                                itemLabel="ELIMINACION"/>
+                                        </h:selectOneMenu>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Prestamo"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.idCodigo}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Prestamo Origen"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.idCodigoOrigen}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Cliente"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.idCliente.nombreCompleto}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Fecha"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.fecha}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="T.Préstamo"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.idTipoPrestamo.nombre}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Interes"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.interes}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Moneda"/>
+                                        </f:facet>
+                                        <h:selectOneMenu
+                                            class="form-control"
+                                            value="#{auditoria.tipoMoneda}"
+                                            id="tipoMoneda"
+                                            disabled="true"
+                                            >
+                                            <f:selectItem
+                                                itemValue="1"
+                                                itemLabel="SOLELS"/>
+                                            <f:selectItem
+                                                itemValue="2"
+                                                itemLabel="DOLARES"/>
+                                            <f:selectItem
+                                                itemValue="3"
+                                                itemLabel="EUROS"/>                                            
+                                        </h:selectOneMenu>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Préstamo"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.prestamo}"/>
+                                    </p:column>
+                                    
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Cuota"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.cuota}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Monto a Pagar"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.montoPagar}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Estado"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.idEstado.nombre}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="N°Renovación"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.numeroRenovacion}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="N°Renovación"/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.fechaRenovacion}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Ind.R."/>
+                                        </f:facet>
+                                        <h:outputText value="#{auditoria.indicadorRenovacion}"/>
+                                    </p:column>
+                                    
+                                    
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+</ui:composition>

@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                >
+    <div id="modalTipoCambio"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h:form id="formTipoCambio" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Tipo de Cambio
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">
+                                        Información
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombre" class="col-sm-4 control-label">
+                                                    Fecha
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:calendar id="fecha" value="#{tipoCambioControlador.tipoCambioModificar.fecha}" readonlyInput="true" pattern="MM/dd/yyyy" >
+                                                        <p:ajax event="blur"/>
+                                                    </p:calendar>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="tipoMoneda" class="col-sm-4 control-label">
+                                                    Tipo Moneda
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{tipoCambioControlador.tipoCambioModificar.tipoMoneda}"
+                                                        id="tipoMoneda"
+                                                        >
+                                                        <f:selectItem
+                                                            itemValue="1"
+                                                            itemLabel="SOLES"/>
+                                                        <f:selectItem
+                                                            itemValue="2"
+                                                            itemLabel="DOLARES"/>
+                                                        <f:selectItem
+                                                            itemValue="3"
+                                                            itemLabel="EUROS"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="tipoCambioCompra" class="col-sm-4 control-label">
+                                                    Tipo de Cambio Compra
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="tipoCambioCompra"
+                                                        value="#{tipoCambioControlador.tipoCambioModificar.tipoCambioCompra}"
+                                                        class="form-control"
+                                                        id="tipoCambioCompra"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="tipoCambioVenta" class="col-sm-4 control-label">
+                                                    Tipo de Cambio Venta
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="tipoCambioVenta"
+                                                        value="#{tipoCambioControlador.tipoCambioModificar.tipoCambioVenta}"
+                                                        class="form-control"
+                                                        id="tipoCambioVenta"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{tipoCambioControlador.actualizarTipoCambio()}"
+                                        >
+                            Actualizar Datos
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

@@ -1,0 +1,559 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="formMenu" >
+		<aside id="left-panel" class="main-sidebar">
+            <section class="sidebar">
+                <div class="user-panel" style="width: 180px; margin: 0px auto">
+                    <div class="pull-left image">
+                        <div class="img-circle" ><i style="color: #1c5b92" class="fa fa-3x fa-user"/></div>
+                    </div>
+                    <div class="pull-left info">
+                        <div style="margin-bottom: 2px"><p:outputLabel value="#{inicioSesionControlador.usuario.idEmpleado.nombre}"/></div>
+                        <a href="#">
+                            <i class="fa fa-circle text-success"></i>
+                            #{utilitarioController.empleado.idArea.nombre}
+                        </a> En Linea
+                    </div>
+                </div>
+                <ul class="sidebar-menu">
+                    <li class="header">MENÚ PRINCIPAL</li>
+                    <li class="active treeview">
+                        <p:commandLink update=":contenido" >
+                            <i class="fa fa-lg fa-fw fa-home"></i> 
+                            <span>Inicio</span> 
+                            <f:setPropertyActionListener
+                                target="#{navegadorControlador.contenido}"
+                                value="./view/home.xhtml"/>
+                        </p:commandLink>
+                    </li>
+                    <li>
+                        <p:commandLink>
+                            <i class="fa fa-lg fa-fw fa-shield"></i>
+                            <span>Seguridad</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </p:commandLink>
+                        <ul class="treeview-menu">
+                            <li>
+                                <p:commandLink id="btnUsuario"
+                                    actionListener="#{cuentasControlador.iniciar()}"
+                                    rendered="#{(navegadorControlador.usuario_Lista or navegadorControlador.usuario_Agregar) and !navegadorControlador.cobrador}"
+                                    >
+                                    Usuario
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/cuentas/menu-usuarios.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/cuentas/lista-usuarios.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnPermisos"
+                                    actionListener="#{perfilesControlador.iniciar()}"
+                                    rendered="#{(navegadorControlador.perfil_Lista or navegadorControlador.perfil_Agregar) and !navegadorControlador.cobrador}"
+                                    >
+                                    Perfil
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/perfiles/menu-perfiles.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/perfiles/lista-perfiles.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnSedes"
+                                    actionListener="#{sedeControlador.iniciar()}"
+                                    rendered="#{navegadorControlador.usuario_Lista and !navegadorControlador.cobrador}"
+                                    >
+                                    Sede
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/sede/menu-sedes.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/sede/lista-sedes.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnAuditoria"
+                                    actionListener="#{auditoriaControlador.iniciar()}"
+                                    rendered="#{navegadorControlador.usuario_Lista}"
+                                    >
+                                    Auditoria
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/auditoria/menu-auditoria.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/auditoria/lista-auditoria.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnAuditoriaEmpleado"
+                                    actionListener="#{auditoriaControlador.iniciarAuditoriaEmpleado()}"
+                                    rendered="#{navegadorControlador.usuario_Lista}"
+                                    >
+                                    Auditoria(Empleado)
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/auditoriaEmpleado/menu-auditoriaEmpleado.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/auditoriaEmpleado/lista-auditoriaEmpleado.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnAuditoriaCliente"
+                                    actionListener="#{auditoriaControlador.iniciarAuditoriaCliente()}"
+                                    rendered="#{navegadorControlador.usuario_Lista}"
+                                    >
+                                    Auditoria(Cliente)
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/auditoriaCliente/menu-auditoriaCliente.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/auditoriaCliente/lista-auditoriaCliente.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnAuditoriaPrestamo"
+                                    actionListener="#{auditoriaControlador.iniciarAuditoriaPrestamo()}"
+                                    rendered="#{navegadorControlador.usuario_Lista}"
+                                    >
+                                    Auditoria(Prestamo)
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/auditoriaPrestamo/menu-auditoriaPrestamo.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/auditoriaPrestamo/lista-auditoriaPrestamo.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnAuditoriaPago"
+                                    actionListener="#{auditoriaControlador.iniciarAuditoriaPago()}"
+                                    rendered="#{navegadorControlador.usuario_Lista}"
+                                    >
+                                    Auditoria(Pago)
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/auditoriaPago/menu-auditoriaPago.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/auditoriaPago/lista-auditoriaPago.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnAuditoriaRenovacion"
+                                    actionListener="#{auditoriaControlador.iniciarAuditoriaRenovacion()}"
+                                    rendered="#{navegadorControlador.usuario_Lista}"
+                                    >
+                                    Auditoria(Renovacion)
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/auditoriaRenovacion/menu-auditoriaRenovacion.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/auditoriaRenovacion/lista-auditoriaRenovacion.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                        </ul>
+                     </li>
+                     <li>
+                        <p:commandLink>
+                            <i class="fa fa-lg fa-fw fa-shield"></i>
+                            <span>Mantenimiento</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </p:commandLink>
+                        <ul class="treeview-menu">
+                            <li>
+                                <p:commandLink
+                                    id="btnEmpresa"
+                                    actionListener="#{areaController.init()}"
+                                    rendered="#{!navegadorControlador.cobrador}"
+                                    >
+                                    Empresa                                   
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/mantenimiento/empresa/menu.xhtml"
+                                        />                                    
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/mantenimiento/empresa/lista.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnEmpleado"
+                                    actionListener="#{empleadoControlador.iniciar()}"
+                                    rendered="#{(navegadorControlador.empleado_Listar or navegadorControlador.empleado_Agregar) and !navegadorControlador.cobrador}"                                                                        
+                                    >
+                                    Empleado
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/empleados/menu-empleados.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/empleados/lista-empleados.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnClientes"
+                                    actionListener="#{clienteControlador.iniciar()}"
+                                    rendered="#{(navegadorControlador.usuario_Lista) and !navegadorControlador.cobrador}"
+                                    >
+                                    Cliente
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/cliente/menu-clientes.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/cliente/lista-clientes.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnTipoCambio"
+                                    actionListener="#{tipoCambioControlador.iniciar()}"
+                                    rendered="#{!navegadorControlador.cobrador}"
+
+                                    >
+                                    Tipo de Cambio
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/mantenimiento/tipoCambio/menu-tipoCambio.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/mantenimiento/tipoCambio/lista-tipoCambio.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnTipoPrestamo"
+                                    actionListener="#{tipoPrestamoControlador.iniciar()}"
+                                    rendered="#{!navegadorControlador.cobrador}"
+
+                                    >
+                                    Tipo Prestamo
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/transaccion/tipoPrestamo/menu-tipoPrestamos.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/transaccion/tipoPrestamo/lista-tipoPrestamos.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnGiro"
+                                    actionListener="#{giroControlador.iniciar()}"
+                                    rendered="#{!navegadorControlador.cobrador}"
+                                    >                                           
+                                    Giro                                    
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/transaccion/giro/menu-giros.xhtml"
+                                        />                                   
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/transaccion/giro/lista-giros.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnZonaCobranza"
+                                    actionListener="#{zonaCobranzaControlador.iniciar()}"
+                                    rendered="#{!navegadorControlador.cobrador}"
+                                    >                                           
+                                    Zona de Viviendas (Cobranza)
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/mantenimiento/zonaCobranza/menu-zonaCobranza.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/mantenimiento/zonaCobranza/lista-zonaCobranza.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnArtefatos"
+                                    actionListener="#{artefactoControlador.iniciar()}"
+                                    rendered="#{navegadorControlador.usuario_Lista and !navegadorControlador.cobrador}"
+                                    >
+                                    Artefacto
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/seguridad/artefacto/menu-artefactos.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/seguridad/artefacto/lista-artefactos.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnConceptoGasto"
+                                    actionListener="#{conceptoGastoControlador.iniciar()}"
+                                    rendered="#{!navegadorControlador.cobrador}"
+
+                                    >
+                                    Concepto de Gasto                                   
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/transaccion/conceptoGasto/menu-conceptoGastos.xhtml"
+                                        />                                    
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/transaccion/conceptoGasto/lista-conceptoGastos.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnGasto"
+                                    actionListener="#{gastoController.init()}"
+                                    rendered="#{!navegadorControlador.cobrador}"
+
+                                    >
+                                    Gasto                                   
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/transaccion/gasto/menu.xhtml"
+                                        />                                    
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/transaccion/gasto/lista.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                        </ul>
+                     </li>
+                     <li>
+                        <p:commandLink>
+                            <i class="fa fa-lg fa-fw fa-shield"></i>
+                            <span>Movimientos</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </p:commandLink>
+                        <ul class="treeview-menu">
+                            <li>
+                                <p:commandLink
+                                    id="btnPrestamo"
+                                    actionListener="#{prestamoControlador.iniciar()}"
+                                    rendered="#{!navegadorControlador.cobrador}">                                           
+                                    Prestamo
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/transaccion/prestamo/menu-prestamos.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/transaccion/prestamo/lista-prestamos.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink id="btnPayment" actionListener="#{paymentController.init()}" 
+                                    
+                                    >Pago
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/transaccion/payment/menu.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/transaccion/payment/list.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnRenewal"
+                                    actionListener="#{renewalController.init()}"
+                                    >
+                                    Renovación                                   
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/transaccion/renewal/menu.xhtml"
+                                        />                                    
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/transaccion/renewal/list.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                        </ul>
+                     </li>
+                     <li>
+                        <p:commandLink id="grupoReportes" update="growl">
+                            <i class="fa fa-lg fa-fw fa-shield"></i>
+                            <span>Reportes</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </p:commandLink>
+                        <ul class="treeview-menu">
+                            <li>
+                                <p:commandLink
+                                    id="btnReporte1"
+                                    actionListener="#{consultaControlador.iniciarConsultaPrestamoPorCobrar()}"
+                                    >                                           
+                                    Prestamos por Cobrar
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/reporte/prestamoPorCobrar/menu-prestamosPorCobrar.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/reporte/prestamoPorCobrar/lista-prestamosPorCobrar.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnReporte2"
+                                    actionListener="#{consultaControlador.iniciarConsultaRecuperacionUtilidades()}"
+                                    >                                           
+                                    Recuperación de Utilidades
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/reporte/recuperacionUtilidades/menu-recuperacionUtilidades.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/reporte/recuperacionUtilidades/lista-recuperacionUtilidades.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnReporte3"
+                                    actionListener="#{consultaControlador.iniciarConsultaPrestamosVencidos()}"
+                                    >                                           
+                                    Prestamos Vencidos
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/reporte/prestamosVencidos/menu-prestamosVencidos.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/reporte/prestamosVencidos/lista-prestamosVencidos.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnReporte4"
+                                    actionListener="#{consultaControlador.iniciarConsultaResumenPrestamos()}"
+                                    >                                           
+                                    Resumen de Préstamos
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/reporte/resumenPrestamos/menu-resumenPrestamos.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/reporte/resumenPrestamos/lista-resumenPrestamos.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnReporte44"
+                                    actionListener="#{reporteResumenGastosController.init()}"
+                                    >                                           
+                                    Resúmen de Gastos
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/reporte/resumenGastos/menu.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/reporte/resumenGastos/lista.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnReporte44a"
+                                    actionListener="#{reporteResumenPagosController.init()}"
+                                    >                                           
+                                    Resúmen de Pagos
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/reporte/resumenPagos/menu.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/reporte/resumenPagos/lista.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink
+                                    id="btnReporte44e"
+                                    actionListener="#{reporteResumenPagosSupervisionController.init()}"
+                                    >                                           
+                                    Pagos Por Supervisión
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.menuDerecha}"
+                                        value="./view/pages/reporte/resumenPagosSupervision/menu.xhtml"
+                                        />
+                                    <f:setPropertyActionListener
+                                        target="#{navegadorControlador.contenido}"
+                                        value="./view/pages/reporte/resumenPagosSupervision/lista.xhtml"
+                                        />
+                                </p:commandLink>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </aside>
+    </h:form>
+</ui:composition>

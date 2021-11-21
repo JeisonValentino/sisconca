@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div id="modalPrestamo"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h:form id="formPrestamo" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Prestamo
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">
+                                        Información
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#garantia" data-toggle="tab"
+                                       aria-expanded="false">
+                                        Garantia/Garante
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="numero" class="col-sm-4 control-label">
+                                                    Número
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Número"
+                                                        required="true"
+                                                        value="#{prestamoControlador.prestamoModificar.id}"
+                                                        class="form-control"
+                                                        id="numero"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtCliente" class="col-sm-4 control-label">
+                                                    Cliente (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{prestamoControlador.prestamoModificar.idCliente.id}"
+                                                        id="txtCliente"
+                                                        disabled="true"
+                                                        >
+                                                        <f:selectItems value="#{prestamoControlador.listaCliente}"
+                                                                       var="cliente"
+                                                                       itemLabel="#{cliente.apellidoPaterno} #{cliente.apellidoMaterno} #{cliente.nombre} (#{cliente.idEstadoSolicitud.nombre})"
+                                                                       
+                                                                       itemValue="#{cliente.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTipoPrestamo" class="col-sm-4 control-label">
+                                                    Tipo Prestamo(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{prestamoControlador.prestamoModificar.idTipoPrestamo.id}"
+                                                        id="txtTipoPrestamo"
+                                                        >
+                                                        <f:selectItems value="#{prestamoControlador.listaTipoPrestamo}"
+                                                                       var="tipoPrestamo"
+                                                                       itemLabel="#{tipoPrestamo.nombre}"
+                                                                       itemValue="#{tipoPrestamo.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtPrestamo" class="col-sm-4 control-label">
+                                                    Prestamo (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Prestamo"
+                                                        required="true"
+                                                        value="#{prestamoControlador.prestamoModificar.prestamo}"
+                                                        class="form-control"
+                                                        id="txtPrestamo"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtEmpleado" class="col-sm-4 control-label">
+                                                    Entrega
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{prestamoControlador.prestamoModificar.idEmpleado.id}"
+                                                        id="txtEmpleado"
+                                                        >
+                                                        <f:selectItems value="#{prestamoControlador.listaEmpleado}"
+                                                                       var="empleado"
+                                                                       itemLabel="#{empleado.nombreCompleto}"
+                                                                       itemValue="#{empleado.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="booleanBtn" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtn"
+                                                                           value="#{prestamoControlador.estadoPrestamo}"
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="garantia">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtArtefacto" class="col-sm-4 control-label">
+                                                    Artefacto
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{prestamoControlador.prestamoModificar.idArtefacto.id}"
+                                                        id="txtArtefacti"
+                                                        >
+                                                        <f:selectItems value="#{prestamoControlador.listaArtefacto}"
+                                                                       var="artefacto"
+                                                                       itemLabel="#{artefacto.nombre}"
+                                                                       itemValue="#{artefacto.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtArtefactoModelo" class="col-sm-4 control-label">
+                                                    Modelo
+                                                </label>
+                                                <div class="col-sm-2">
+                                                    <h:inputText 
+                                                        label="Modelo"
+                                                        required="true"
+                                                        value="#{prestamoControlador.prestamoModificar.idArtefacto.modelo}"
+                                                        class="form-control"
+                                                        id="txtModelo" disabled="true" />
+                                                </div>
+                                                <label for="txtArtefactoModelo" class="col-sm-2 control-label">
+                                                    Marca
+                                                </label>
+                                                <div class="col-sm-2">
+                                                    <h:inputText 
+                                                        label="Marca"
+                                                        required="true"
+                                                        value="#{prestamoControlador.prestamoModificar.idArtefacto.marca}"
+                                                        class="form-control"
+                                                        id="txtMarca" disabled="true" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtGarante" class="col-sm-4 control-label">
+                                                    Garante
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{prestamoControlador.prestamoModificar.garante}"
+                                                        id="txtGarante"
+                                                        >
+                                                        <f:selectItems value="#{prestamoControlador.listaCliente}"
+                                                                       var="cliente"
+                                                                       itemLabel="#{cliente.nombreCompleto}"
+                                                                       itemValue="#{cliente.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{prestamoControlador.actualizarPrestamo()}"
+                                        >
+                            Modificar prestamo
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

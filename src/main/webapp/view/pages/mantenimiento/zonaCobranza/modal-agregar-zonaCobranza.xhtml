@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div id="modalZonaCobranza"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h:form id="formZonaCobranza" class="form-horizontal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">
+                            Zona de Cobranza
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">
+                                        Información
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" 
+                                                showDetail="false"
+                                                autoUpdate="true" 
+                                                closable="true" />                                                                        
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombre" class="col-sm-4 control-label">
+                                                    Nombre(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        required="true"
+                                                        value="#{zonaCobranzaControlador.zonaCobranzaAgregar.nombre}"
+                                                        class="form-control"
+                                                        id="txtNombre"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtAbreviatura" class="col-sm-4 control-label">
+                                                    Abreviatura
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Abreviatura"                                                        
+                                                        value="#{zonaCobranzaControlador.zonaCobranzaAgregar.abreviatura}"
+                                                        class="form-control"
+                                                        id="txtAbreviatura"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="booleanBtn" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtn"
+                                                                           value="#{zonaCobranzaControlador.estadoZonaCobranza}"
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{zonaCobranzaControlador.agregarZonaCobranza()}"
+                                        >
+                            Agregar
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

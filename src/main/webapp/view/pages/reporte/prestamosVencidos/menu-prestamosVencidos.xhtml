@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <aside
+        id="menuDerecha" 
+        class="control-sidebar control-sidebar-dark" 
+        style="position: fixed; height: auto;">
+        <div class="tab-content">
+            <div id="control-sidebar-theme-demo-options-tab" class="tab-pane active">
+                <h:form  
+                    >
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel
+                                    value="Filtrar préstamo por:"
+                                    />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel value="A la fecha" />
+                                    <br />
+                                    <p:calendar id="filterEnd" value="#{consultaControlador.consultaFiltro.filterEnd}" readonlyInput="true" pattern="MM/d/yyyy">
+                                        <p:ajax event="blur"/>
+                                    </p:calendar>
+                                <br />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel value="Cliente" />
+                                <br />
+
+                                <p:inputText id="filterNombreCliente" value="#{consultaControlador.consultaFiltro.filterNombreCliente}" >
+                                    <p:ajax event="blur"/>
+                                </p:inputText>
+                                <br />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel value="Zona" />
+                                <br />
+
+                                <p:inputText id="filterZona" value="#{consultaControlador.consultaFiltro.filterZona}" >
+                                    <p:ajax event="blur"/>
+                                </p:inputText>
+                                <br />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel value="Sede" />
+                                <br />
+
+                                <h:selectOneMenu
+                                    class="form-control"
+                                    value="#{consultaControlador.consultaFiltro.filterIdSede}"
+                                    id="selectSedeFiltro"
+                                    disabled="#{!consultaControlador.soporte}"
+                                    >
+                                    <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                    <f:selectItems value="#{consultaControlador.listaSede}"
+                                                   var="sede"
+                                                   itemLabel="#{sede.nombre}"
+                                                   itemValue="#{sede.id}"/>
+                                    <p:ajax event="change"/>
+                                    
+                                </h:selectOneMenu>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:commandLink
+                                    style="width: 100%;color: white"
+                                    value="Filtrar"
+                                    class="btn btn-primary"
+                                    >
+                                    <p:ajax listener="#{consultaControlador.actualizarConsultaPrestamosVencidos()}" update="formListaPrestamos" />
+                                </p:commandLink>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div> 
+        </div>
+    </aside>
+</ui:composition>

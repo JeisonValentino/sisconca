@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+    <div id="prestamoSelectedModalContainer"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog" style="width: 80%">
+            <div class="modal-content">
+                <h:form id="formPrestamo" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Pago</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages"  showDetail="false" autoUpdate="true"  closable="true" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <p:dataTable
+                                                        id="dataTablePayment"
+                                                        reflow="true"
+                                                        rowIndexVar="index"
+                                                        lazy="true"
+                                                        rows="10" 
+                                                        currentPageReportTemplate="Total Registros ( {totalRecords} )"
+                                                        value="#{paymentController.payments}"
+                                                        rendered="#{navegadorControlador.usuario_Lista}"
+                                                        var="payment"
+                                                        emptyMessage="No hay pagos registrados"
+                                                        >
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Lista de Pagos"/>
+                                                        </f:facet>
+                                                        <f:facet name="{Exporters}">
+                                                            <h:commandLink>
+                                                                <p:graphicImage 
+                                                                    value="resources/imagenes/iconos/excel.png"
+                                                                    width="24"/>
+                                                                <pe:exporter type="xlsx"
+                                                                             postProcessor="#{utilitarioControlador.personalizarExcel}"
+                                                                             target="dataTablePayment"
+                                                                             fileName="ListadoPagos" />
+                                                            </h:commandLink>
+
+                                                            <h:commandLink>
+                                                                <p:graphicImage 
+                                                                    value="resources/imagenes/iconos/pdf.png" 
+                                                                    width="24"/>
+                                                                <pe:exporter type="pdf" encoding="cp1250" preProcessor="#{utilitarioControlador.personalizarPdf}" 
+                                                                             facetBackground="#af6114" 
+                                                                             facetFontColor="#FFFFFF"  
+                                                                             target="dataTablePayment" 
+                                                                             fileName="ListadoPagos"/>
+                                                            </h:commandLink>
+                                                        </f:facet>
+                                                        <p:column 
+                                                            exportable="false"
+                                                            width="30"
+                                                            headerText="#">
+                                                            <h:outputText value="#{payment.id}"/>
+                                                        </p:column>
+                                                        <p:column style="text-align: center"  width="40%" >
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Cobrador"/>
+                                                            </f:facet>
+                                                            <div style="text-align: left">
+                                                                <h:outputText value="#{payment.cobrador.idEmpleado.nombreCompleto}"/>
+                                                            </div>
+                                                        </p:column>
+                                                        <p:column width="100" >
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Fecha"/>
+                                                            </f:facet>
+                                                            <center><h:outputText value="#{payment.fechaPago}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText></center>
+                                                        </p:column>
+                                                        <p:column style="text-align: center"  width="20%" >
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Pago"/>
+                                                            </f:facet>
+                                                            <div style="text-align: right">
+                                                                <h:outputText value="S/ " />
+                                                                <h:outputText value="#{payment.pago}">
+                                                                    <f:convertNumber pattern="#,##0.00"/>
+                                                                </h:outputText>
+                                                            </div>
+                                                        </p:column>
+                                                        <p:column style="text-align: center"  width="40%" >
+                                                            <f:facet name="header">
+                                                                <h:outputText value="FISU"/>
+                                                            </f:facet>
+                                                            <p:selectBooleanCheckbox style="margin-top: 10px" disabled="true" value="#{payment.flagSupervisor eq 1}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default" actionListener="#{paymentController.addPayment}">
+                            Agregar pago
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <section class="content-header">
+        <h1> Préstamos Vencidos</h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard">
+                    </i> Inicio
+                </a>
+            </li>
+            <li class="active">Préstamos</li>
+        </ol>
+    </section>
+
+    <section  class="content">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <p:commandButton actionListener="#{loansOverdueController.generatePDF}" value="Exportar Registros"
+                                                     icon="fa fa-file-pdf-o"
+                                                     class="btn"
+                                        />
+                        &nbsp;
+                        <p:commandButton
+                            title="Al presiona, se actualizara la lista de prestamos."
+                            actionListener="#{loansOverdueController.init}"
+                            value="Actualizar Registros"
+                            icon="fa fa-refresh"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h:form id="formListaPrestamos">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">
+                                    
+                                </h3>
+                            </div>
+                            <div class="box-body" style="display: block;">
+                                <p:dataTable
+                                    id="dataTablePrestamo"
+                                    reflow="true"
+                                    rowIndexVar="index"
+                                    lazy="true"
+                                    rows="10" 
+                                    paginator="true"
+                                    paginatorPosition="bottom"
+                                    rowsPerPageTemplate="10,20,50,100"
+                                    value="#{loansOverdueController.lazyLoans}"
+                                    rendered="#{navegadorControlador.usuario_Lista}"
+                                    var="prestamo"
+                                    >
+                                    <p:column 
+                                        width="30"
+                                        headerText="#">
+                                        <h:outputText value="#{prestamo.id}"/>
+                                    </p:column>
+                                    <p:column width="100">
+                                        <f:facet name="header">
+                                            <h:outputText value="Fecha de Registro"/>
+                                        </f:facet>
+                                        <h:outputText style="text-align: center" value="#{prestamo.fecha}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+                                    </p:column>
+                                    <p:column
+                                        style="text-align: center"
+                                        width="40%"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Cliente"/>
+                                        </f:facet>
+                                        <h:outputText styleClass="align" value="#{prestamo.idCliente.nombreCompleto}"/>
+                                    </p:column>
+                                    <p:column
+                                        style="text-align: center"
+                                        width="20%"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Tipo Préstamo"/>
+                                        </f:facet>
+                                        <h:outputText value="#{prestamo.idTipoPrestamo.nombre}"/>
+                                    </p:column>
+                                    <p:column style="text-align: center" width="8%" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Tiempo"/>
+                                        </f:facet>
+                                        <h:outputText value="#{prestamo.idTipoPrestamo.tiempo}"/>
+                                    </p:column>  
+                                    <p:column width="8%" style="text-align: center">
+                                        <f:facet name="header">
+                                            <h:outputText value="Interés"/>
+                                        </f:facet>
+                                        <h:outputText value="#{prestamo.idTipoPrestamo.interes}"/>
+                                    </p:column>
+                                    <p:column style="text-align: center" width="8%">
+                                        <f:facet name="header">
+                                            <h:outputText value="Cobra"/>
+                                        </f:facet>
+                                        <h:outputText value="#{prestamo.idTipoPrestamo.cobra}"/>
+                                    </p:column>
+                                    <p:column style="text-align: center" width="18%">
+                                        <f:facet name="header">
+                                            <h:outputText value="Préstamo"/>
+                                        </f:facet>
+                                        <h:outputText value="S/ "/>
+                                        <h:outputText value="#{prestamo.prestamo}" style="text-align: right">
+                                            <f:convertNumber pattern="#,##0.00"/>
+                                        </h:outputText>
+                                        <f:facet name="footer">
+                                            <h:outputText value="S/ #{prestamoControlador.totalAmountLoans}" >
+                                                <f:convertNumber pattern="#,##0.00"/>
+                                            </h:outputText>
+                                        </f:facet>
+                                    </p:column>
+                                    <p:column style="text-align: center" width="10%">
+                                        <f:facet name="header">
+                                            <h:outputText value="Estado"/>
+                                        </f:facet>
+                                        <h:outputText value="#{prestamo.idEstado.nombre}"/>
+                                    </p:column>
+                                    <p:columnGroup type="footer" >
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align:right" footerText="Total" exportable="true" />
+                                            <p:column footerText="S/ #{prestamoControlador.totalAmountLoans}" exportable="true" />
+                                        </p:row>
+                                    </p:columnGroup>
+
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </section>
+</ui:composition>

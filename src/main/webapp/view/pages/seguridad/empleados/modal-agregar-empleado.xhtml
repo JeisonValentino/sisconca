@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div id="modalEmpleado"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h:form id="formEmpleado" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Empleado
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">
+                                        Información_
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" 
+                                                showDetail="false"
+                                                autoUpdate="true" 
+                                                closable="true" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTipoDocumento" class="col-sm-4 control-label">
+                                                    Tipo de Documento(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{empleadoControlador.empleadoAgregar.idTipoDocumentoIdentidad.id}"
+                                                        id="txtTipoDocumento"
+                                                        >
+                                                        <f:selectItems value="#{empleadoControlador.listaTipoDocumentoIdentidad}"
+                                                                       var="tipoDocumento"
+                                                                       itemLabel="#{tipoDocumento.nombreDocumento}"
+                                                                       itemValue="#{tipoDocumento.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNumeroDocumento" class="col-sm-4 control-label">
+                                                    Número Documento (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Número Documento"
+                                                        required="true"
+                                                        maxlength="13"
+                                                        onkeypress="return valSoloDigitos(event);"
+                                                        value="#{empleadoControlador.empleadoAgregar.numeroDocumento}"
+                                                        class="form-control"
+                                                        id="txtNumeroDocumento">
+                                                        <f:validateLength maximum="13" minimum="8" />
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombres" class="col-sm-4 control-label">
+                                                    Nombres (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombres"
+                                                        required="true"
+                                                        value="#{empleadoControlador.empleadoAgregar.nombre}"
+                                                        class="form-control"
+                                                        id="txtNombres"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtApellidoPaterno" class="col-sm-4 control-label">
+                                                    Apellido Paterno(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Apellido Paterno"
+                                                        required="true"
+                                                        value="#{empleadoControlador.empleadoAgregar.apellidoPaterno}"
+                                                        class="form-control"
+                                                        id="txtApellidoPaterno"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtApellidoMaterno" class="col-sm-4 control-label">
+                                                    Apellido Materno(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Apellido Materno"
+                                                        value="#{empleadoControlador.empleadoAgregar.apellidoMaterno}"
+                                                        class="form-control"
+                                                        id="txtApellidoMaterno"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtApellidoCorreo" class="col-sm-4 control-label">
+                                                    Correo
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:inputText
+                                                        label="Correo"
+                                                        value="#{empleadoControlador.empleadoAgregar.correo}"
+                                                        class="form-control"
+                                                        validatorMessage="Correo: El correo no cumple con el formato."
+                                                        id="txtCorreo">
+                                                        <f:validateRegex
+                                                            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                                    </p:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="estadoCivil" class="col-sm-4 control-label">
+                                                    Estado Civil
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{empleadoControlador.empleadoAgregar.estadoCivil}"
+                                                        id="estadoCivil"
+                                                        >
+                                                        <f:selectItem
+                                                            itemValue=""
+                                                            itemLabel="--Seleccionar--"/>
+                                                        <f:selectItem
+                                                            itemValue="S"
+                                                            itemLabel="SOLTERO"/>
+                                                        <f:selectItem
+                                                            itemValue="C"
+                                                            itemLabel="CASADO"/>
+                                                        <f:selectItem
+                                                            itemValue="V"
+                                                            itemLabel="VIUDO"/>
+                                                        <f:selectItem
+                                                            itemValue="D"
+                                                            itemLabel="DIVORCIADO"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="direccion" class="col-sm-4 control-label">
+                                                    Dirección
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:inputText
+                                                        label="Direccion"
+                                                        value="#{empleadoControlador.empleadoAgregar.direccion}"
+                                                        class="form-control"                                                        
+                                                        id="dirección">                                                        
+                                                    </p:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="gradoInstruccion" class="col-sm-4 control-label">
+                                                    Grado de Instrucción
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{empleadoControlador.empleadoAgregar.gradoInstruccion}"
+                                                        id="gradoInstruccion"
+                                                        >
+                                                        <f:selectItem
+                                                            itemValue=""
+                                                            itemLabel="--Seleccionar--"/>
+                                                        <f:selectItem
+                                                            itemValue="P"
+                                                            itemLabel="PRIMARIA"/>
+                                                        <f:selectItem
+                                                            itemValue="S"
+                                                            itemLabel="SECUNDARIA"/>
+                                                        <f:selectItem
+                                                            itemValue="T"
+                                                            itemLabel="TECNICO"/>
+                                                        <f:selectItem
+                                                            itemValue="U"
+                                                            itemLabel="UNIVERSITARIO"/>
+                                                        <f:selectItem
+                                                            itemValue="M"
+                                                            itemLabel="MAESTRIA"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                     <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="conocimientoInformatico" class="col-sm-4 control-label">
+                                                    Conocimiento Informático
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:inputText
+                                                        label="conocimientoInformatico"
+                                                        value="#{empleadoControlador.empleadoAgregar.conocimientoInformatico}"
+                                                        class="form-control"                                                        
+                                                        id="conocimientoInformatico">                                                        
+                                                    </p:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTelefono" class="col-sm-4 control-label">
+                                                    Teléfono
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Teléfono"
+                                                        value="#{empleadoControlador.empleadoAgregar.telefono}"
+                                                        class="form-control"
+                                                        id="txtTelefono"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtSede" class="col-sm-4 control-label">
+                                                    Sede
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{empleadoControlador.empleadoAgregar.idSede.id}"
+                                                        id="txtSede"
+                                                        >
+                                                        <f:selectItems value="#{empleadoControlador.listaSede}"
+                                                                       var="sede"
+                                                                       itemLabel="#{sede.nombre}"
+                                                                       itemValue="#{sede.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="booleanBtn" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtn"
+                                                                           value="#{empleadoControlador.estadoEmpleado}"
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{empleadoControlador.agregarEmpleado()}"
+                                        >
+                            Agregar empleado
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

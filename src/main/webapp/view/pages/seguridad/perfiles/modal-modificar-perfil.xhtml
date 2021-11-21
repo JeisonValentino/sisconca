@@ -1,0 +1,655 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <div id="modalPerfil"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <h:form id="formPerfil" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Perfil
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">
+                                        Información
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#permisos" data-toggle="tab"
+                                       aria-expanded="false">
+                                        Permisos
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombre" class="col-sm-4 control-label">
+                                                    Nombre (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        required="true"
+                                                        value="#{perfilesControlador.perfilModificar.nombre}"
+                                                        class="form-control"
+                                                        id="txtNombre"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtDescripcion" class="col-sm-4 control-label">
+                                                    Descripción
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Descripción"
+                                                        value="#{perfilesControlador.perfilModificar.descripcion}"
+                                                        class="form-control"
+                                                        id="txtDescripcion"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="txtNumeroTelefono" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtn"
+                                                                           value="#{perfilesControlador.estadoPerfil}"
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="permisos">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.actividad}" >
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionActividad()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Actividad
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tableActividad"
+                                                        id="tableActividad"
+                                                        selection="#{perfilesControlador.listaAccionActividadModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccionSinAuditar}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.cliente}" >
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionCliente()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Cliente
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tableCliente"
+                                                        id="tableCliente"
+                                                        selection="#{perfilesControlador.listaAccionClienteModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccionSinAuditar}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.empleado}" >
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionEmpleado()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Empleado
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tableEmpleado"
+                                                        id="tableEmpleado"
+                                                        selection="#{perfilesControlador.listaAccionEmpleadoModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccionSinAuditar}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.empresa}" >
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionEmpresa()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Empresa
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tableEmpresa"
+                                                        id="tableEmpresa"
+                                                        selection="#{perfilesControlador.listaAccionEmpresaModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccionSinAuditar}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.infodaf}">
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionInfodaf()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        INFODAF
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tableInfodaf"
+                                                        id="tableInfodaf"
+                                                        selection="#{perfilesControlador.listaAccionInfodafModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccionReporteINFODAF}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox 
+                                                            value="#{perfilesControlador.mes}" >
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionMes()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Mes
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tableMes"
+                                                        id="tableMes"
+                                                        selection="#{perfilesControlador.listaAccionMesModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccionMes}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.perfil}" >
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionPerfil()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Perfil
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tablePerfil"
+                                                        id="tablePerfil"
+                                                        selection="#{perfilesControlador.listaAccionPerfilModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccionSinAuditar}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.periodo}">
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionPeriodo()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Periodo
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tablePeriodo"
+                                                        id="tablePeriodo"
+                                                        selection="#{perfilesControlador.listaAccionPeriodoModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccion}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.presupuesto}" >
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionPresupuesto()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Presupuesto
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tablePresupuesto"
+                                                        id="tablePresupuesto"
+                                                        selection="#{perfilesControlador.listaAccionPresupuestoModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccion}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.reporte}" >
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionReporte()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Reporte
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tableReporte"
+                                                        id="tableReporte"
+                                                        selection="#{perfilesControlador.listaAccionReporteModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccionReporte}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.segmento}" >
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionSegmento()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Segmento
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tableSegmento"
+                                                        id="tableSegmento"
+                                                        selection="#{perfilesControlador.listaAccionSegmentoModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccionSinAuditar}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.sitio}" >
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionSitio()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Sitio
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tableSitio"
+                                                        id="tableSitio"
+                                                        selection="#{perfilesControlador.listaAccionSitioModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccionSinAuditar}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+                                            <div class="box collapsed-box">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        <p:selectBooleanCheckbox value="#{perfilesControlador.usuario}" >
+                                                            <p:ajax listener="#{perfilesControlador.seleccionarTodoAccionUsuario()}" />
+                                                        </p:selectBooleanCheckbox>
+                                                        &nbsp;
+                                                        Usuario
+                                                    </h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" 
+                                                                class="btn btn-box-tool"
+                                                                data-widget="collapse">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body" style="display: none;">
+                                                    <p:dataTable
+                                                        widgetVar="tableUsuario"
+                                                        id="tableUsuario"
+                                                        selection="#{perfilesControlador.listaAccionUsuarioModificarSeleccionada}"
+                                                        rowKey="#{accion.id}"
+                                                        style="margin-bottom:0"
+                                                        value="#{perfilesControlador.listaAccionSinAuditar}"
+                                                        var="accion"
+                                                        >
+                                                        <p:column selectionMode="multiple" 
+                                                                  style="width:40px;text-align:center"/>
+                                                        <p:column
+                                                            headerText="Acción"
+                                                            >
+                                                            <h:outputText
+                                                                value="#{accion.nombre}"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{perfilesControlador.actualizarPerfil()}"
+                                        >
+                            Actualizar perfil
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

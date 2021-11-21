@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div id="modalGasto"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h:form id="formGiro"  
+                        class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Gasto
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">
+                                        Información
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">
+                                                    Tipo Comprobante *
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu 
+                                                        value="#{gastoController.gasto.tipoComprobante}"
+                                                        label="Tipo Comprobante"
+                                                        required="true"
+                                                        class="form-control">
+                                                        <f:selectItem itemLabel="BOLETA" itemValue="1"></f:selectItem>
+                                                        <f:selectItem itemLabel="TICKET" itemValue="2"></f:selectItem>
+                                                        <f:selectItem itemLabel="RECIBO POR HONORARIO" itemValue="3"></f:selectItem>
+                                                        <f:selectItem itemLabel="RECIBO INTERNO" itemValue="4"></f:selectItem>
+                                                    </h:selectOneMenu>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                   
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">
+                                                    Serie - Número *
+                                                </label>
+                                                <div class="col-sm-3">
+                                                    <h:inputText 
+                                                        value="#{gastoController.gasto.serie}"
+                                                        label="Serie"
+                                                        required="true"
+                                                        class="form-control">
+                                                    </h:inputText>                                                    
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <h:inputText 
+                                                        value="#{gastoController.gasto.numero}"
+                                                        label="Número"
+                                                        required="true"
+                                                        class="form-control">
+                                                    </h:inputText>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">
+                                                    Fecha *
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:calendar
+                                                        id="fehcaaa"
+                                                        value="#{gastoController.gasto.fecha}"
+                                                        label="Fecha" pattern="MM/dd/yyyy" readonlyInput="true"
+                                                        required="true">
+                                                    </p:calendar>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">
+                                                    Concepto *
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu class="form-control" value="#{gastoController.gasto.idConcepto.id}" required="true" 
+                                                                     label="Concepto">
+                                                        <f:selectItems value="#{gastoController.conceptoGastos}" var="con"
+                                                                       itemValue="#{con.id}" itemLabel="#{con.nombre}"></f:selectItems>
+                                                                      
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">
+                                                    Área *
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu class="form-control" value="#{gastoController.gasto.idArea.id}" required="true" 
+                                                                     label="Área" >
+                                                        <f:selectItems value="#{gastoController.areas}" var="cona"
+                                                                       itemValue="#{cona.id}" itemLabel="#{cona.descripcion}"></f:selectItems>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">
+                                                    Valor Neto *
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:inputText
+                                                        value="#{gastoController.gasto.valorNeto}"
+                                                        label="Valor Neto"
+                                                        onkeypress="return valDecimales(event);"
+                                                        required="true"
+                                                        id="valorneto"
+                                                        class="form-control">
+                                                    </p:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">
+                                                    Igv (%)*
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:inputText value="#{gastoController.gasto.igv}"
+                                                                label="Igv"
+                                                                onkeypress="return valDecimales(event);"
+                                                                id="igv"
+                                                                maxlength="5"
+                                                                required="true"
+                                                                class="form-control" >
+                                                        <p:ajax event="blur" process="@this,igv,valorneto" oncomplete="updateImporte();" />
+                                                    </p:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">
+                                                    Importe *
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:inputText
+                                                        value="#{gastoController.gasto.importe}"
+                                                        label="Importe"
+                                                        id="importe"
+                                                        required="true"
+                                                        readonly="true"
+                                                        class="form-control">
+                                                    </p:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">
+                                                    Tipo Moneda *
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        value="#{gastoController.gasto.tipoMoneda}"
+                                                        label="Importe"
+                                                        required="true"
+                                                        id="tipoMonedaId"
+                                                        class="form-control">
+                                                        <f:selectItem itemLabel="-- Ninguno --" noSelectionOption="true"></f:selectItem>
+                                                        <f:selectItem itemLabel="SOLES" itemValue="1"></f:selectItem>
+                                                        <f:selectItem itemLabel="DOLARES" itemValue="2"></f:selectItem>
+                                                        <f:selectItem itemLabel="EUROS" itemValue="3"></f:selectItem>
+                                                        <p:ajax event="change" update="tipoCambioddId"
+                                                                process="@this,tipoMonedaId,fehcaaa"
+                                                                listener="#{gastoController.onSelectItem()}" />
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">
+                                                    Tipo Cambio *
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:inputText class="form-control"
+                                                                     value="#{gastoController.gasto.tipoCambio}"
+                                                                     label="Tipo Cambio"
+                                                                     readonly="true"
+                                                                     id="tipoCambioddId"
+                                                                     required="true"></p:inputText>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="txtEstado" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtn"
+                                                                           value="#{gastoController.gasto.estadoTemp}"
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>                                  
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{gastoController.saveGasto()}"
+                                        update=":formListaTipoCambio:carTable">
+                            Guardar
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+    
+    <h:form>
+        <p:remoteCommand name="updateImporte" 
+                         actionListener="#{gastoController.updateImporte()}"
+                         update=":formGiro:igv, :formGiro:valorneto, :formGiro:importe">
+            
+        </p:remoteCommand>
+    </h:form>
+</ui:composition>

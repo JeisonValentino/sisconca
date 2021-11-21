@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div id="modalSede"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <h:form id="formSede" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Sede
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">
+                                        Información
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombre" class="col-sm-4 control-label">
+                                                    Nombre(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        required="true"
+                                                        value="#{sedeControlador.sedeAgregar.nombre}"
+                                                        class="form-control"
+                                                        id="txtNombre"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtRuc" class="col-sm-4 control-label">
+                                                    Ruc
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Ruc"
+                                                        value="#{sedeControlador.sedeAgregar.ruc}"
+                                                        class="form-control"
+                                                        id="txtRuc"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtDireccion" class="col-sm-4 control-label">
+                                                    Direccion
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Direccion"
+                                                        value="#{sedeControlador.sedeAgregar.direccion}"
+                                                        class="form-control"
+                                                        id="txtDireccion"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTelefono" class="col-sm-4 control-label">
+                                                    Telefono
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Telefono"
+                                                        value="#{sedeControlador.sedeAgregar.telefono}"
+                                                        class="form-control"
+                                                        id="txtTelefono"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="txtNumeroTelefono" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtn"
+                                                                           value="#{sedeControlador.estadoSede}"
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{sedeControlador.agregarSede()}"
+                                        >
+                            Agregar Sede
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

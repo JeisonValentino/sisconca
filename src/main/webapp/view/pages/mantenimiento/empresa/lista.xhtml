@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <section class="content-header">
+        <h1>
+            Empresa
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard">
+                    </i> Inicio
+                </a>
+            </li>
+            <li class="active">Empresa</li>
+        </ol>
+    </section>
+
+    <section  class="content">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        
+                        <p:commandButton
+                            title="Al presionar, se mostrara un panel al lado derecho de la pantalla en donde se podra realizar busquedas personalizadas."
+                            onclick="agregarControlSidebarABody();"
+                            actionListener="#"
+                            value="Mostrar Filtro"
+                            icon="fa fa-eye"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                        <p:commandButton
+                            title="Al presiona, se actualizara la lista de empresas."
+                            value="Actualizar Registros"
+                            icon="fa fa-refresh"
+                            action="#{areaController.contar()}"
+                            class="btn"
+                            update="formListaTipoCambio:carTable"
+                            >
+                        </p:commandButton>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h:form id="formListaTipoCambio">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">
+                                    Lista de Empresas
+                                </h3>
+                                <div class="box-tools pull-right">
+                                    
+                                    <p:commandLink
+                                        actionListener="#{areaController.mostrarModalAgregarGiro()}"
+                                        class="btn btn-success">
+                                        <i class="fa fa-plus"/> Agregar Empresa
+                                    </p:commandLink>
+                                    
+                                </div>
+                            </div>
+                            <div class="box-body" style="display: block;">
+                                <p:dataTable var="car" value="#{areaController.lazyModel}" paginator="true" rows="10"
+                                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                             rowsPerPageTemplate="5,10,15"
+                                             id="carTable" lazy="true">
+                                    
+                                    <p:column headerText="Código" width="150" style="text-align: center">
+                                        <h:outputText value="#{car.codigo}" />
+                                    </p:column>
+                                    <p:column headerText="Nombre" >
+                                        <h:outputText value="#{car.descripcion}" />
+                                    </p:column>
+                                    <p:column headerText="Estado" width="150" style="text-align: center" >
+                                        <h:outputText value="#{car.estado ? 'Activo': 'Inactivo'}" />
+                                    </p:column>
+                                    <p:column
+                                        exportable="false"
+                                        width="40"
+                                        style="text-align: center">
+                                        <p:commandLink
+                                            actionListener="#{areaController.cargarGasto(car.id)}"
+                                            title="Modificar Empresa">
+                                            <i class="fa fa-pencil"/>
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div jsf:id="divModalTipoCambio">
+        <ui:include src="menu.xhtml"/>
+    </div>
+    
+    <div jsf:id="modalAgregarId">
+        <ui:include src="modal-agregar.xhtml"></ui:include>
+    </div>
+    
+</ui:composition>

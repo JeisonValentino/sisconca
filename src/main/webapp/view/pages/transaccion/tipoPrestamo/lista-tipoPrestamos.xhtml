@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <section class="content-header">
+        <h1>
+            Tipo Prestamo
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard">
+                    </i> Inicio
+                </a>
+            </li>
+            <li class="active">TipoPrestamos</li>
+        </ol>
+    </section>
+    <section  class="content">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <p:commandButton
+                            title="Al presionar, se mostrara un panel al lado derecho de la pantalla en donde se podra realizar busquedas personalizadas."
+                            onclick="agregarControlSidebarABody();"
+                            actionListener="#"
+                            value="Mostrar Filtro"
+                            icon="fa fa-eye"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                        <p:commandButton
+                            title="Al presiona, se actualizara la lista de tipos de prestamos."
+                            actionListener="#{tipoPrestamoControlador.iniciarListaTipoPrestamos()}"
+                            value="Actualizar Registros"
+                            icon="fa fa-refresh"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h:form id="formListaTipoPrestamos">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">
+                                    Lista de Tipo de Prestamos
+                                </h3>
+                                <div class="box-tools pull-right">
+                                    <p:commandLink
+                                        actionListener="#{tipoPrestamoControlador.mostrarModalAgregarTipoPrestamo()}"
+                                        class="btn btn-success"
+                                        >
+                                        <i class="fa fa-plus"/> Agregar tipoPrestamo
+                                    </p:commandLink>
+                                </div>
+                            </div>
+                            <div class="box-body" style="display: block;">
+                                <p:dataTable
+                                    id="dataTableTipoPrestamo"
+                                    reflow="true"
+                                    rowIndexVar="index"
+                                    lazy="true"
+                                    rows="10" 
+                                    paginator="true"
+                                    paginatorPosition="bottom"
+                                    currentPageReportTemplate="Total Registros ( {totalRecords} )"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                    {PreviousPageLink} {PageLinks} {NextPageLink} 
+                                    {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                    rowsPerPageTemplate="10,20,50,100"
+                                    value="#{tipoPrestamoControlador.listaTipoPrestamos}"
+                                    var="tipoPrestamo"
+                                    >
+                                    <f:facet name="header">
+                                        <h:outputText value="Lista de TipoPrestamos"/>
+                                    </f:facet>
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <p:graphicImage 
+                                                value="resources/imagenes/iconos/excel.png"
+                                                width="24"/>
+                                            <pe:exporter type="xlsx"
+                                                         postProcessor="#{utilitarioControlador.personalizarExcel}"
+                                                         target="dataTableTipoPrestamo"
+                                                         fileName="Prestamo Listado" />
+                                        </h:commandLink>
+                                        <h:commandLink>
+                                            <p:graphicImage 
+                                                value="resources/imagenes/iconos/pdf.png" 
+                                                width="24"/>
+                                            <pe:exporter type="pdf" encoding="cp1250" preProcessor="#{utilitarioControlador.personalizarPdf}" 
+                                                         facetBackground="#af6114" 
+                                                         facetFontColor="#FFFFFF"  
+                                                         target="dataTableTipoPrestamo" 
+                                                         fileName="Prestamo Listado"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                                    <p:column 
+                                        exportable="false"
+                                        width="30"
+                                        headerText="#">
+                                        #{index + 1}
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombre"/>
+                                        </f:facet>
+                                        <h:outputText value="#{tipoPrestamo.nombre}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Tiempo"/>
+                                        </f:facet>
+                                        <h:outputText value="#{tipoPrestamo.tiempo}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Interes"/>
+                                        </f:facet>
+                                        <h:outputText value="#{tipoPrestamo.interes}%"/>
+                                    </p:column>
+                                    <p:column
+                                        style="text-align: center"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Cobra"/>
+                                        </f:facet>
+                                        <h:outputText value="#{tipoPrestamo.cobra}"/>
+                                    </p:column>
+                                    <p:column
+                                        style="text-align: center"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Estado"/>
+                                        </f:facet>
+                                        <h:outputText value="#{tipoPrestamo.idEstado.nombre}"/>
+                                    </p:column>
+                                    <p:column
+                                        exportable="false"
+                                        width="40"
+                                        style="text-align: center"
+                                        >
+                                        <p:commandLink
+                                            actionListener="#{tipoPrestamoControlador.mostrarModalModificarTipoPrestamo(tipoPrestamo)}"
+                                            title="Modificar TipoPrestamo"
+                                            >
+                                            <i class="fa fa-pencil"/>
+                                        </p:commandLink>
+                                    </p:column>
+                                    <p:column
+                                        exportable="false"
+                                        width="40"
+                                        style="text-align: center"
+                                        >
+                                        <p:commandLink
+                                            rendered="#{tipoPrestamo.idEstado.id eq tipoPrestamoControlador.activo?true:false}"
+                                            actionListener="#{tipoPrestamoControlador.mostrarModalInhabilitarTipoPrestamo(tipoPrestamo)}"
+                                            title="Inhabilitar TipoPrestamo"
+                                            >
+                                            <i class="fa fa-lock"/>
+                                        </p:commandLink>
+                                        <p:commandLink
+                                            rendered="#{tipoPrestamo.idEstado.id eq tipoPrestamoControlador.inactivo?true:false}"
+                                            actionListener="#{tipoPrestamoControlador.mostrarModalHabilitarTipoPrestamo(tipoPrestamo)}"
+                                            title="Habilitar TipoPrestamo"
+                                            >
+                                            <i class="fa fa-unlock"/>
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div jsf:id="divModalTipoPrestamo">
+        <ui:include src="#{tipoPrestamoControlador.contenidoModalTipoPrestamo}"/>
+    </div>
+
+</ui:composition>

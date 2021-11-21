@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <aside
+        id="menuDerecha" 
+        class="control-sidebar control-sidebar-dark" 
+        style="position: fixed; height: auto;">
+        <div class="tab-content">
+            <div id="control-sidebar-theme-demo-options-tab" class="tab-pane active">
+                <h:form  
+                    >
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel
+                                    value="Filtros por:"
+                                    />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel
+                                    value="Fecha inicio"
+                                    />
+                                <p:calendar id="fechaInicio" value="#{reporteResumenGastosController.fechaInicio}" readonlyInput="true" pattern="MM/dd/yyyy" >
+                                                        
+                                </p:calendar>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel  value="Fecha Fin" />
+                                
+                                <p:calendar id="fechaFin" value="#{reporteResumenGastosController.fechaFin}" readonlyInput="true" pattern="MM/dd/yyyy" >
+                                    
+                                </p:calendar>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel  value="Área" />
+                                <h:selectOneMenu value="#{reporteResumenGastosController.idArea}" class="form-control">
+                                    <f:selectItem itemLabel="-- Ningúno --" noSelectionOption="true"/>
+                                    <f:selectItems value="#{reporteResumenGastosController.areas}" var="area"
+                                                   itemLabel="#{area.descripcion}" itemValue="#{area.id}"/>
+                                </h:selectOneMenu>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel  value="Concepto" />
+                                <h:inputText value="#{reporteResumenGastosController.concepto}"
+                                             class="form-control"
+                                             label="Concepto" />
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:commandLink
+                                    style="width: 100%;color: white"
+                                    value="Buscar"
+                                    class="btn btn-primary"
+                                    actionListener="#{reporteResumenGastosController.contar()}"
+                                    update=":formListaTipoCambio:carTable"
+                                    />
+                            </div>
+                        </div>
+                    </div>
+                    
+                </h:form>
+            </div> 
+        </div>
+    </aside>
+</ui:composition>

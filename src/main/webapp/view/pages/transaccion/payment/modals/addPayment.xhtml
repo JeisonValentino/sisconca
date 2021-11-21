@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+    <div id="addPaymentModalContainer"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h:form id="formAddPayment" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Agregar Pago</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages"  showDetail="false" autoUpdate="true"  closable="true" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label for="paymentAmount" class="col-sm-4 control-label">Cobrador</label>
+                                                    <div class="col-sm-8">
+                                                        <h:selectOneMenu
+                                                            disabled="#{!paymentController.admin}"
+                                                            class="form-control"
+                                                            value="#{paymentController.payment.cobrador.id}"
+                                                            id="txtCliente"
+                                                            >
+                                                            <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                                            <f:selectItems value="#{paymentController.cobradores}"
+                                                                           var="cobrador"
+                                                                           itemLabel="#{cobrador.idEmpleado.nombreCompleto}"
+                                                                           itemValue="#{cobrador.id}"/>
+                                                            <p:ajax event="change"/>
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12"></div>
+                                                <div class="col-sm-12">
+                                                    <label for="paymentDate" class="col-sm-4 control-label">Fecha</label>
+                                                    <div class="col-sm-8">
+                                                        <p:calendar id="paymentDate" value="#{paymentController.payment.fechaPago}" readonlyInput="true" pattern="MM/dd/yyyy" >
+                                                            <p:ajax event="blur"/>
+                                                        </p:calendar>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-sm-12"></div>
+                                                <div class="col-sm-12">
+                                                    <label for="formaPago" class="col-sm-4 control-label">Forma de Pago</label>
+                                                    <div class="col-sm-8">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{paymentController.payment.formaPago}"
+                                                        id="formaPago"
+                                                        >
+                                                        
+                                                        <f:selectItem
+                                                            itemValue="E"
+                                                            itemLabel="EFECTIVO"/>
+                                                        <f:selectItem
+                                                            itemValue="D"
+                                                            itemLabel="DEPOSITO"/>
+                                                        
+                                                    </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-sm-12"></div>
+                                                <div class="col-sm-12">
+                                                    <label for="paymentAmount" class="col-sm-4 control-label">Monto a pagar</label>
+                                                    <div class="col-sm-8">
+                                                        <p:inputNumber
+                                                            value="#{paymentController.payment.pago}"
+                                                            id="paymentAmount"
+                                                            label="amount"
+                                                            
+                                                            />
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-sm-12"></div>
+                                                <div class="col-sm-12">
+                                                    <label class="col-sm-4 control-label">FISU</label>
+                                                    <div class="col-sm-8">
+                                                        <p:selectBooleanCheckbox disabled="#{!paymentController.admin}" value="#{paymentController.fisu}">
+                                                            <p:ajax event="change" listener="#{paymentController.setFisuValue}"/>
+                                                        </p:selectBooleanCheckbox>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default" actionListener="#{paymentController.registerPayment}">
+                            Agregar pago
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

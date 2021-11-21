@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div id="paymentModalContainer"
+         class="modal fade" 
+         role="dialog"
+         >
+        <div class="modal-dialog" style="width: 80%">
+            <div class="modal-content">
+                <h:form id="formPrestamo" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Pago</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" 
+                                                showDetail="false"
+                                                autoUpdate="true" 
+                                                closable="true" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p:dataTable
+                                                id="dataTablePrestamo"
+                                                reflow="true"
+                                                rowIndexVar="index"
+                                                lazy="true"
+                                                value="#{paymentController.prestamos}"
+                                                rendered="#{navegadorControlador.usuario_Lista}"
+                                                var="prestamo"
+                                                >
+                                                <f:facet name="header">
+                                                    <h:outputText value="Lista de Prestamos"/>
+                                                </f:facet>
+                                                <p:column 
+                                                    width="150"
+                                                    headerText="Sede">
+                                                    <h:outputText value="#{prestamo.idSede.nombre}"/>
+                                                </p:column>
+                                                <p:column 
+                                                    width="75"
+                                                    headerText="N° Prestamo">
+                                                    <h:outputText value="#{prestamo.id}"/>
+                                                </p:column>
+                                                <p:column width="100">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Fecha"/>
+                                                    </f:facet>
+                                                    <center>
+                                                        <h:outputText value="#{prestamo.fecha}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                        </h:outputText>
+                                                    </center>
+                                                </p:column>
+                                                <p:column style="text-align: center" width="22%">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Cliente"/>
+                                                    </f:facet>
+                                                    <div style="text-align: left">
+                                                        <h:outputText value="#{prestamo.idCliente.nombreCompleto}"/>
+                                                    </div>
+                                                </p:column>
+                                                <p:column
+                                                    style="text-align: center"
+                                                    width="20%"
+                                                    >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Tipo Préstamo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{prestamo.idTipoPrestamo.nombre}"/>
+                                                </p:column>
+                                                <p:column
+                                                    style="text-align: center"
+                                                    width="20%"
+                                                    >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Cuota"/>
+                                                    </f:facet>
+                                                    <h:outputText value="S/ #{prestamo.cuota}"/>
+                                                </p:column>
+                                                <p:column style="text-align: center" width="15%">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="A pagar"/>
+                                                    </f:facet>
+                                                    <div style="text-align: right">
+                                                        <h:outputText value="S/ "/>
+                                                        <h:outputText value="#{prestamo.montoPagar}" style="text-align: right">
+                                                            <f:convertNumber pattern="#,##0.00"/>
+                                                        </h:outputText>
+                                                    </div>
+                                                </p:column>
+                                                <p:column style="text-align: center" width="15%">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Pagado"/>
+                                                    </f:facet>
+                                                    <div style="text-align: right">
+                                                        <h:outputText value="S/ "/>
+                                                        <h:outputText value="#{prestamo.pagado}" style="text-align: right">
+                                                            <f:convertNumber pattern="#,##0.00"/>
+                                                        </h:outputText>
+                                                    </div>
+                                                </p:column>
+                                                <p:column style="text-align: center" width="15%">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Saldo"/>
+                                                    </f:facet>
+                                                    <div style="text-align: right">
+                                                        <h:outputText value="S/ "/>
+                                                        <h:outputText value="#{prestamo.montoPagar - prestamo.pagado}" style="text-align: right">
+                                                            <f:convertNumber pattern="#,##0.00"/>
+                                                        </h:outputText>
+                                                    </div>
+                                                </p:column>
+                                                <p:column width="15%">
+                                                    <div style="text-align: center">
+                                                        <p:commandButton id="selectRowBtn" value="Agregar Pago" 
+                                                                         action="#{paymentController.selectPrestamo(prestamo.id)}">
+                                                        </p:commandButton>
+                                                    </div>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

@@ -1,0 +1,314 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                >
+
+    <div id="modalPrestamo"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h:form id="formPrestamo" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Inhabilitar Prestamo
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">Información</a>
+                                </li>
+                                <li class="">
+                                    <a href="#garantia" data-toggle="tab"
+                                       aria-expanded="false">
+                                        Garantia/Garante
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" 
+                                                showDetail="false"
+                                                autoUpdate="true" 
+                                                closable="true" />
+                                    <div class="row" >
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="numero" class="col-sm-4 control-label">
+                                                    Número
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        disabled="true"
+                                                        label="Número"
+                                                        required="true"
+                                                        value="#{prestamoControlador.prestamoModificar.id}"
+                                                        class="form-control"
+                                                        id="numero"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTime" class="col-sm-4 control-label">Fecha</label>
+                                                <div class="col-sm-6">
+                                                    <p:calendar id="paymentDate" disabled="true" value="#{prestamoControlador.prestamoModificar.fecha}" readonlyInput="true" pattern="MM/dd/yyyy" >
+                                                        <p:ajax event="blur"/>
+                                                    </p:calendar>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtCliente" class="col-sm-4 control-label">
+                                                    Cliente (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        disabled="true"
+                                                        label="cliente"
+                                                        required="true"
+                                                        value="#{prestamoControlador.prestamoModificar.idCliente.nombreCompleto}"
+                                                        class="form-control"
+                                                        id="cliente"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="tipoPrestamo" class="col-sm-4 control-label">Tipo Prestamo(*)</label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        disabled="true"
+                                                        label="tipoPrestamo"
+                                                        required="true"
+                                                        value="#{prestamoControlador.prestamoModificar.idTipoPrestamo.nombre}"
+                                                        class="form-control"
+                                                        id="tipoPrestamo"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTime" class="col-sm-4 control-label">Tiempo</label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        disabled="true"
+                                                        label="Time"
+                                                        value="#{prestamoControlador.prestamoModificar.idTipoPrestamo.tiempo}"
+                                                        class="form-control"
+                                                        id="txtTime">
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtRate" class="col-sm-4 control-label">Interés</label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Interes"
+                                                        disabled="true"
+                                                        value="#{prestamoControlador.prestamoModificar.idTipoPrestamo.interes}"
+                                                        class="form-control"
+                                                        id="txtRate">
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtPrestamo" class="col-sm-4 control-label">Prestamo (*)</label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Prestamo"
+                                                        required="true"
+                                                        disabled="true"
+                                                        value="#{prestamoControlador.prestamoModificar.prestamo}"
+                                                        class="form-control"
+                                                        id="txtPrestamo">
+
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtCuotas" class="col-sm-4 control-label">Cuotas</label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        disabled="true"
+                                                        label="Cuotas"
+                                                        value="#{prestamoControlador.prestamoModificar.cuota}"
+                                                        class="form-control"
+                                                        id="txtCuota">
+                                                        <f:convertNumber pattern="#,##0.00"/>
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtApagar" class="col-sm-4 control-label">A pagar</label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        disabled="true"
+                                                        label="txtApagar"
+                                                        value="#{prestamoControlador.prestamoModificar.montoPagar}"
+                                                        class="form-control"
+                                                        id="txtApagar">
+                                                        <f:convertNumber pattern="#,##0.00"/>
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="cobro" class="col-sm-4 control-label">Cobro</label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="cobro"
+                                                        disabled="true"
+                                                        value="#{prestamoControlador.prestamoModificar.frecuencia}"
+                                                        class="form-control"
+                                                        id="cobro">
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="entrega" class="col-sm-4 control-label">
+                                                    Entrega
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        disabled="true"
+                                                        label="entrega"
+                                                        value="#{prestamoControlador.prestamoModificar.idEmpleado.nombreCompleto}"
+                                                        class="form-control"
+                                                        id="entrega">
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="active" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="active"
+                                                                           disabled="true"
+                                                                           value="#{prestamoControlador.prestamoModificar.idEstado.id eq '1' ? 'true':'false'}"
+                                                                           onLabel="Sí"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="garantia">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="artefacto" class="col-sm-4 control-label">
+                                                    Artefacto
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        disabled="true"
+                                                        label="artefacto"
+                                                        value="#{prestamoControlador.prestamoModificar.idArtefacto.nombre}"
+                                                        class="form-control"
+                                                        id="artefacto">
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="modelo" class="col-sm-4 control-label">
+                                                    Artefacto modelo
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="modelo"
+                                                        disabled="true"
+                                                        value="#{prestamoControlador.prestamoModificar.idArtefacto.modelo}"
+                                                        class="form-control"
+                                                        id="modelo"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="garante" class="col-sm-4 control-label">
+                                                    Garante
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="garante"
+                                                        disabled="true"
+                                                        value="#{prestamoControlador.garante.nombreCompleto}"
+                                                        class="form-control"
+                                                        id="garante"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{prestamoControlador.inhabilitarPrestamo()}"
+                                        >
+                            Si
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            No
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

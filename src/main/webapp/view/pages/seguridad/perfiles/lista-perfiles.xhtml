@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <section class="content-header">
+        <h1>
+            Perfiles
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard">
+                    </i> Inicio
+                </a>
+            </li>
+            <li class="active">Perfiles</li>
+        </ol>
+    </section>
+
+    <section  class="content">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <p:commandButton
+                            title="Al presionar, se mostrara un panel al lado derecho de la pantalla en donde se podra realizar busquedas personalizadas."
+                            onclick="agregarControlSidebarABody();"
+                            actionListener="#"
+                            value="Mostrar Filtro"
+                            icon="fa fa-eye"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                        <p:commandButton
+                            title="Al presiona, se actualizara la lista de perfiles."
+                            actionListener="#{perfilesControlador.iniciarListaPerfiles()}"
+                            value="Actualizar Registros"
+                            icon="fa fa-refresh"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h:form id="formListaPerfiles">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">
+                                    Lista de Perfiles
+                                </h3>
+                                <div class="box-tools pull-right">
+                                    <p:commandLink
+                                        actionListener="#{perfilesControlador.mostrarModalAgregarPerfil()}"
+                                        class="btn btn-success"
+                                        rendered="#{navegadorControlador.perfil_Agregar}"
+                                        disabled="#{!perfilesControlador.soporte}"
+                                        >
+                                        <i class="fa fa-plus"/> Agregar perfil
+                                    </p:commandLink>
+                                </div>
+                            </div>
+                            <div class="box-body" style="display: block;">
+                                <p:dataTable
+                                    id="dataTablePerfil"
+                                    reflow="true" 
+                                    paginatorPosition="bottom"
+                                    currentPageReportTemplate="Total Registros ( {totalRecords} )"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                    {PreviousPageLink} {PageLinks} {NextPageLink} 
+                                    {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                    rowsPerPageTemplate="10,20,50,100"
+                                    rowIndexVar="index" rows="10" paginator="true"
+                                    value="#{perfilesControlador.listaPerfiles}"
+                                    rendered="#{navegadorControlador.perfil_Lista}"
+                                    var="perfil"
+                                    >
+                                    <f:facet name="header">
+                                        <h:outputText value="Lista de Perfiles"/>
+                                    </f:facet>
+                                    <f:facet name="{Refresh}" >
+                                        <div style="float: right">
+                                            <p:commandLink
+                                                actionListener="#{perfilesControlador.iniciar()}"
+                                                >
+                                                <i class="fa fa-refresh" style="color: white"/> &nbsp;
+                                            </p:commandLink>
+                                        </div>
+                                    </f:facet>
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <p:graphicImage 
+                                                value="resources/imagenes/iconos/excel.png"
+                                                width="24"/>
+                                            <pe:exporter type="xlsx"
+                                                         postProcessor="#{utilitarioControlador.personalizarExcel}"
+                                                         target="dataTablePerfil"
+                                                         fileName="Perfil Listado" />
+                                        </h:commandLink>
+                                        <h:commandLink>
+                                            <p:graphicImage 
+                                                value="resources/imagenes/iconos/pdf.png" 
+                                                width="24"/>
+                                            <pe:exporter type="pdf" encoding="cp1250"  preProcessor="#{utilitarioControlador.personalizarPdf}" facetBackground="#af6114" facetFontColor="#FFFFFF"  
+                                                         target="dataTablePerfil" 
+                                                         fileName="Perfil Listado"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                                    <p:column 
+                                        exportable="false"
+                                        width="30"
+                                        headerText="#">
+                                        #{index + 1}
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombre"/>
+                                        </f:facet>
+                                        <h:outputText value="#{perfil.nombre}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Descripcion"/>
+                                        </f:facet>
+                                        <h:outputText value="#{perfil.descripcion}"/>
+                                    </p:column>
+                                    <p:column
+                                        style="text-align: center"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Estado"/>
+                                        </f:facet>
+                                        <h:outputText value="#{perfil.idEstado.nombre}"/>
+                                    </p:column>
+                                    <p:column
+                                        exportable="false"
+                                        width="40"
+                                        style="text-align: center"
+                                        rendered="#{navegadorControlador.perfil_Modificar}"
+                                        >
+                                        <p:commandLink
+                                            actionListener="#{perfilesControlador.mostrarModalModificarPerfil(perfil)}"
+                                            title="Modificar Perfil"
+                                            disabled="#{!perfilesControlador.soporte}"
+                                            >
+                                            <i class="fa fa-pencil"/>
+                                        </p:commandLink>
+                                    </p:column>
+                                    <p:column
+                                        exportable="false"
+                                        width="40"
+                                        style="text-align: center"
+                                        rendered="#{navegadorControlador.perfil_Inhabilitar}"
+                                        >
+                                        <p:commandLink
+                                            rendered="#{perfil.idEstado.id eq perfilesControlador.activo?true:false}"
+                                            actionListener="#{perfilesControlador.mostrarModalInhabilitarPerfil(perfil)}"
+                                            title="Inhabilitar Perfil"
+                                            disabled="#{!perfilesControlador.soporte}"
+                                            >
+                                            <i class="fa fa-lock"/>
+                                        </p:commandLink>
+                                        <p:commandLink
+                                            rendered="#{perfil.idEstado.id eq perfilesControlador.activo?false:true}"
+                                            actionListener="#{perfilesControlador.mostrarModalHabilitarPerfil(perfil)}"
+                                            title="Habilitar Perfil"
+                                            disabled="#{!perfilesControlador.soporte}"
+                                            >
+                                            <i class="fa fa-unlock"/>
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                            <div class="box-footer" style="display: block;">
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div jsf:id="divModalPerfil">
+        <ui:include src="#{perfilesControlador.contenidoModalPerfil}"/>
+    </div>
+
+</ui:composition>

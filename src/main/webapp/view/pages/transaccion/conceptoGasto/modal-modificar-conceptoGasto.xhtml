@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div id="modalConceptoGasto"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h:form id="formConceptoGasto" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            ConceptoGasto
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">
+                                        Información
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#datosVivienda" data-toggle="tab"
+                                       aria-expanded="false">
+                                        Áreas
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />                                                                        
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombre" class="col-sm-4 control-label">
+                                                    Nombre (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        required="true"
+                                                        value="#{conceptoGastoControlador.conceptoGastoModificar.nombre}"
+                                                        class="form-control"
+                                                        id="txtNombre"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>     
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="booleanBtn" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtn"
+                                                                           value="#{conceptoGastoControlador.estadoConceptoGasto}"
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="datosVivienda">
+                                    
+                                    <div class="row">
+                                        <div class="col col-lg-8">
+                                            <h:selectOneMenu id="hola" class="form-control" converter="converter" 
+                                                             value="#{conceptoGastoControlador.area}">
+                                                <f:selectItems value="#{conceptoGastoControlador.areas}" var="area"
+                                                               itemLabel="#{area.descripcion}" itemValue="#{area}">
+                                                </f:selectItems>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="col col-lg-4">
+                                            <p:commandButton value="Agregar Área" 
+                                                             update="conceptoGastosss"
+                                                             process="@this,hola"
+                                                             action="#{conceptoGastoControlador.agregarAreaGuardado()}"></p:commandButton>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <p:dataTable id="conceptoGastosss"
+                                                 emptyMessage="No hay áreas"
+                                        value="#{conceptoGastoControlador.conceptoGastoAreas}" 
+                                                 var="area" rowIndexVar="inde">
+                                        <f:facet name="header">
+                                            Áreas
+                                        </f:facet>
+                                        <p:column headerText="Código" width="30%" style="text-align: center;">
+                                            #{area.idArea.codigo}
+                                        </p:column>
+                                        <p:column headerText="Nombre">
+                                            #{area.idArea.descripcion}
+                                        </p:column>
+                                        <p:column width="100" style="text-align: center;">
+                                            <p:commandLink
+                                                actionListener="#{conceptoGastoControlador.deleteAreaId(inde, area.id)}"
+                                                title="Eliminar Área"
+                                                process="@this"
+                                                update="conceptoGastosss">
+                                                <i class="fa fa-trash"/>
+                                            </p:commandLink>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{conceptoGastoControlador.actualizarConceptoGasto()}"
+                                        >
+                            Modificar conceptoGasto
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

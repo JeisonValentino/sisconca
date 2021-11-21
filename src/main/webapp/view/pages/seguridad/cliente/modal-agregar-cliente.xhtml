@@ -1,0 +1,1007 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+    <style>
+    #mdialTamanio{
+      width: 55% !important;
+    }
+    </style>
+    <div id="modalCliente"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog" id="mdialTamanio">
+            <div class="modal-content">
+                <h:form id="formCliente" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Cliente
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">
+                                        Datos Personales
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#datosVivienda" data-toggle="tab"
+                                       aria-expanded="false">
+                                        Datos Vivienda
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#datosComerciales" data-toggle="tab"
+                                       aria-expanded="false">
+                                        Datos Comerciales
+                                    </a>
+                                </li>
+                                
+                                <li class="">
+                                    <a href="#datosAval" data-toggle="tab"
+                                       aria-expanded="false">
+                                        Aval
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#datosFoto" data-toggle="tab"
+                                       aria-expanded="false">
+                                        Fotografía
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                            
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" 
+                                                showDetail="false"
+                                                autoUpdate="true" 
+                                                closable="true" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTipoPersona" class="col-sm-4 control-label">
+                                                    Tipo Persona(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{clienteControlador.clienteAgregar.idTipoPersona.id}"
+                                                        id="txtTipoPersona"
+                                                        >
+                                                        <f:selectItems value="#{clienteControlador.listaTipoPersona}"
+                                                                       var="tipoPersona"
+                                                                       itemLabel="#{tipoPersona.nombre}"
+                                                                       itemValue="#{tipoPersona.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTipoDocumento" class="col-sm-4 control-label">
+                                                    Tipo de Documento(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{clienteControlador.clienteAgregar.idTipoDocumentoIdentidad.id}"
+                                                        id="txtTipoDocumento"
+                                                        >
+                                                        <f:selectItems value="#{clienteControlador.listaTipoDocumentoIdentidad}"
+                                                                       var="tipoDocumento"
+                                                                       itemLabel="#{tipoDocumento.nombreDocumento}"
+                                                                       itemValue="#{tipoDocumento.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtEstadoSolicitud" class="col-sm-4 control-label">
+                                                    Solicitante
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{clienteControlador.clienteAgregar.idEstadoSolicitud.id}"
+                                                        id="txtEstadoSolicitud"
+                                                        >
+                                                        <f:selectItems value="#{clienteControlador.listaEstadoSolicitud}"
+                                                                       var="estadoSolicitud"
+                                                                       itemLabel="#{estadoSolicitud.nombre}"
+                                                                       itemValue="#{estadoSolicitud.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNumeroDocumento" class="col-sm-4 control-label">
+                                                    Número Documento (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Número Documento"
+                                                        required="true"
+                                                        maxlength="13"
+                                                        onkeypress="return valSoloDigitos(event);"
+                                                        value="#{clienteControlador.clienteAgregar.numeroDocumento}"
+                                                        class="form-control"
+                                                        id="txtNumeroDocumento">
+                                                        <f:validateLength maximum="13" minimum="8" />
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombres" class="col-sm-4 control-label">
+                                                    Nombres (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombres"
+                                                        required="true"
+                                                        value="#{clienteControlador.clienteAgregar.nombre}"
+                                                        class="form-control"
+                                                        id="txtNombres"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtApellidoPaterno" class="col-sm-4 control-label">
+                                                    Apellido Paterno(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Apellido Paterno"
+                                                        required="true"
+                                                        value="#{clienteControlador.clienteAgregar.apellidoPaterno}"
+                                                        class="form-control"
+                                                        id="txtApellidoPaterno"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtApellidoMaterno" class="col-sm-4 control-label">
+                                                    Apellido Materno
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Apellido Materno"
+                                                        value="#{clienteControlador.clienteAgregar.apellidoMaterno}"
+                                                        class="form-control"
+                                                        id="txtApellidoMaterno"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--                                    <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtTipoPersona" class="col-sm-4 control-label">
+                                                                                        Tipo Vivienda(*)
+                                                                                    </label>
+                                                                                    <div class="col-sm-6">
+                                                                                        <h:selectOneMenu
+                                                                                            class="form-control"
+                                                                                            value="#{clienteControlador.clienteAgregar.idTipoVivienda.id}"
+                                                                                            id="txtTipoVivienda"
+                                                                                            >
+                                                                                            <f:selectItems value="#{clienteControlador.listaTipoVivienda}"
+                                                                                                           var="tipoVivienda"
+                                                                                                           itemLabel="#{tipoVivienda.nombre}"
+                                                                                                           itemValue="#{tipoVivienda.id}"/>
+                                                                                        </h:selectOneMenu>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>-->
+                                    <!--                                    <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtDistrito" class="col-sm-4 control-label">
+                                                                                       Distrito
+                                                                                    </label>
+                                                                                    <div class="col-sm-6">
+                                                                                        <h:selectOneMenu
+                                                                                            class="form-control"
+                                                                                            value="#{clienteControlador.clienteAgregar.idDistrito.id}"
+                                                                                            id="txtDistrito"
+                                                                                            >
+                                                                                            <f:selectItems value="#{clienteControlador.listaDistrito}"
+                                                                                                           var="tipoDistrito"
+                                                                                                           itemLabel="#{tipoDistrito.nombre}"
+                                                                                                           itemValue="#{tipoDistrito.id}"/>
+                                                                                        </h:selectOneMenu>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>-->
+                                    <!--                                    <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="txtDireccion" class="col-sm-4 control-label">
+                                                                                        Direccion
+                                                                                    </label>
+                                                                                    <div class="col-sm-6">
+                                                                                        <h:inputText
+                                                                                            label="Direccion"
+                                                                                            value="#{clienteControlador.clienteAgregar.direccion}"
+                                                                                            class="form-control"
+                                                                                            id="txtDireccion"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtApellidoCorreo" class="col-sm-4 control-label">
+                                                    Correo
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:inputText
+                                                        label="Correo"
+                                                        value="#{clienteControlador.clienteAgregar.correo}"
+                                                        class="form-control"
+                                                        id="txtCorreo"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="telefono" class="col-sm-3 control-label">
+                                                    Teléfono(*)
+                                                </label>
+                                                <div class="col-sm-3">
+                                                    <h:inputText
+                                                    	required="true"
+                                                        label="Teléfono"
+                                                        value="#{clienteControlador.clienteAgregar.telefono}"
+                                                        class="form-control"
+                                                        id="telefono"/>
+                                                     
+                                                </div>
+                                                <label for="telefono" class="col-sm-3 control-label">
+                                                    Teléfono 2
+                                                </label>
+                                                <div class="col-sm-3">
+                                                    <h:inputText
+                                                        label="Teléfono2"
+                                                        value="#{clienteControlador.clienteAgregar.telefono2}"
+                                                        class="form-control"
+                                                        id="telefono2"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="telefono" class="col-sm-3 control-label">
+                                                    celular
+                                                </label>
+                                                <div class="col-sm-3">
+                                                    <h:inputText
+                                                        label="Celular"
+                                                        value="#{clienteControlador.clienteAgregar.celular}"
+                                                        class="form-control"
+                                                        id="celular"/>
+                                                     
+                                                </div>
+                                                <label for="telefono" class="col-sm-3 control-label">
+                                                    Celular 2
+                                                </label>
+                                                <div class="col-sm-3">
+                                                    <h:inputText
+                                                        label="Celular2"
+                                                        value="#{clienteControlador.clienteAgregar.celular2}"
+                                                        class="form-control"
+                                                        id="celular2"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtFoto" class="col-sm-4 control-label">
+                                                    Subir Foto
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:fileUpload fileUploadListener="#{clienteControlador.upload}" mode="advanced" id="txtFoto"
+                                                    allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="10000000"></p:fileUpload>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="booleanBtn" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtn"
+                                                                           value="#{clienteControlador.estadoCliente}"
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="datosVivienda">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTipoPersona" class="col-sm-4 control-label">
+                                                    Tipo Vivienda(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                    	label="Tipo Vivienda" 
+                                                        class="form-control"
+                                                        value="#{clienteControlador.clienteAgregar.idTipoVivienda.id}"
+                                                        id="txtTipoVivienda"
+                                                        required="true"
+                                                        
+                                                        >
+                                                        <f:selectItem itemLabel="Seleccione..." noSelectionOption="true"></f:selectItem>
+                                                        <f:selectItems value="#{clienteControlador.listaTipoVivienda}"
+                                                                       var="tipoVivienda"
+                                                                       itemLabel="#{tipoVivienda.nombre}"
+                                                                       itemValue="#{tipoVivienda.id}"/>
+                                                        <p:ajax event="change"
+                                                                update="formCliente:txtInicioAlquiler,formCliente:txtFinAlquiler"/>
+                                                        
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            
+                                            <div class="form-group row">
+                                                <label for="txtInicioAlquiler" class="col-sm-3 col-form-label">Inicio de Alquiler</label>
+                                                <div class="col-sm-3">
+                                                  <p:calendar id="txtInicioAlquiler" value="#{clienteControlador.clienteAgregar.inicioAlquiler}" 
+                                                              readonlyInput="true" pattern="MM/dd/yyyy" 
+                                                              disabled="#{clienteControlador.clienteAgregar.idTipoVivienda.id==1?true:false}"
+                                                              >
+                                                    <p:ajax event="blur"/>
+                                                  </p:calendar>
+                                                </div>
+                                                <label for="txtFinAlquiler" class="col-sm-3 col-form-label">Fin de Alquiler</label>
+                                                <div class="col-sm-3">
+                                                  <p:calendar id="txtFinAlquiler" value="#{clienteControlador.clienteAgregar.finAlquiler}" 
+                                                              readonlyInput="true" pattern="MM/dd/yyyy"
+                                                              disabled="#{clienteControlador.clienteAgregar.idTipoVivienda.id==1?true:false}"
+                                                              >
+                                                    <p:ajax event="blur"/>
+                                                  </p:calendar>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTipoPersona" class="col-sm-4 control-label">
+                                                    Zona de Cobranza
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    
+                                                    <h:selectOneMenu
+                                                    	label="Zona de Cobranza" 
+                                                        class="form-control"
+                                                        value="#{clienteControlador.clienteAgregar.idZonaCobranza.id}"
+                                                        id="txtZonaCobranza"
+                                                        required="true"
+                                                        >
+                                                        <f:selectItem itemLabel="Seleccione..." noSelectionOption="true"></f:selectItem>
+                                                        <f:selectItems value="#{clienteControlador.listaZonaCobranza}"
+                                                                       var="zonaCobranza"
+                                                                       itemLabel="#{zonaCobranza.nombre}"
+                                                                       itemValue="#{zonaCobranza.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtDistrito" class="col-sm-4 control-label">
+                                                    Distrito
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                    	label="Distrito" 
+                                                        class="form-control"
+                                                        value="#{clienteControlador.clienteAgregar.idDistrito.id}"
+                                                        id="txtDistrito"
+                                                        required="true"
+                                                        >
+                                                        <f:selectItem itemLabel="Seleccione..." noSelectionOption="true"></f:selectItem>
+                                                        <f:selectItems value="#{clienteControlador.listaDistrito}"
+                                                                       var="tipoDistrito"
+                                                                       itemLabel="#{tipoDistrito.nombre}"
+                                                                       itemValue="#{tipoDistrito.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtDireccion" class="col-sm-4 control-label">
+                                                    Direccion
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Direccion"
+                                                        value="#{clienteControlador.clienteAgregar.direccion}"
+                                                        class="form-control"
+                                                        id="txtDireccion"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtDireccion" class="col-sm-4 control-label">
+                                                    Referencia
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Referencia"
+                                                        value="#{clienteControlador.clienteAgregar.referencia}"
+                                                        class="form-control"
+                                                        id="referencia"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="otrosDatos" class="col-sm-4 control-label">
+                                                    Otros Datos
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="otrosDatos"
+                                                        value="#{clienteControlador.clienteAgregar.otrosDatos}"
+                                                        class="form-control"
+                                                        id="otrosDatos"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>  
+                                
+                                <div class="tab-pane" id="datosComerciales">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtRuc" class="col-sm-4 control-label">
+                                                    Ruc (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Ruc"
+                                                        value="#{clienteControlador.datoComercialAgregar.ruc}"
+                                                        class="form-control"
+                                                        id="txtRuc"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtGiro" class="col-sm-4 control-label">
+                                                    Giro
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{clienteControlador.datoComercialAgregar.idGiro.id}"
+                                                        id="txtGiro2"
+                                                        >
+                                                        <f:selectItems value="#{clienteControlador.listaGiro}"  
+                                                                       var="giro"
+                                                                       itemLabel="#{giro.descripcion}"
+                                                                       itemValue="#{giro.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtRazonSocial" class="col-sm-4 control-label">
+                                                    Razon Social
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        
+                                                        value="#{clienteControlador.datoComercialAgregar.razonSocial}"
+                                                        class="form-control"
+                                                        id="txtRazonSocial"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtDireccionDC" class="col-sm-4 control-label">
+                                                    Direccion
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        value="#{clienteControlador.datoComercialAgregar.direccion}"
+                                                        class="form-control"
+                                                        id="txtDireccionDC"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtReferencia" class="col-sm-4 control-label">
+                                                    Referencia
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        
+                                                        value="#{clienteControlador.datoComercialAgregar.referencia}"
+                                                        class="form-control"
+                                                        id="txtReferencia"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                   <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="txtTelefonoDC" class="col-sm-4 control-label">
+                                                    Teléfono
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Teléfono"
+                                                        value="#{clienteControlador.datoComercialAgregar.telefono}"
+                                                        class="form-control"
+                                                        id="txtTelefonoDC"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtLinea" class="col-sm-4 control-label">
+                                                    Linea Credito
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre"
+                                                        
+                                                        value="#{clienteControlador.datoComercialAgregar.lineaCredrito}"
+                                                        class="form-control"
+                                                        id="txtLinea"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTipoVivienda" class="col-sm-4 control-label">
+                                                    Local
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{clienteControlador.datoComercialAgregar.idTipoVivienda.id}"
+                                                        id="txtGiro"
+                                                        >
+                                                        <f:selectItems value="#{clienteControlador.listaTipoVivienda}"
+                                                                       var="tipoVivienda"
+                                                                       itemLabel="#{tipoVivienda.nombre}"
+                                                                       itemValue="#{tipoVivienda.id}"/>
+                                                        <p:ajax event="change"
+                                                                update="formCliente:inicioAlquilerDC, formCliente:finAlquilerDC"
+                                                                />
+                                                        
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    
+
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            
+                                            <div class="form-group row">
+                                                <label for="inicioAlquilerDC" class="col-sm-3 col-form-label">Inicio de Alquiler</label>
+                                                <div class="col-sm-3">
+                                                    <p:calendar id="inicioAlquilerDC" value="#{clienteControlador.datoComercialAgregar.inicioAlquilerDC}" 
+                                                                readonlyInput="true" pattern="MM/dd/yyyy" 
+                                                                disabled="#{clienteControlador.datoComercialAgregar.idTipoVivienda.id==1? true : false}"
+                                                                >
+                                                    <p:ajax event="blur"/>
+                                                  </p:calendar>
+                                                </div>
+                                                <label for="finAlquilerDC" class="col-sm-3 col-form-label">Fin de Alquiler</label>
+                                                <div class="col-sm-3">
+                                                    <p:calendar id="finAlquilerDC" value="#{clienteControlador.datoComercialAgregar.finAlquilerDC}" 
+                                                                readonlyInput="true" pattern="MM/dd/yyyy" 
+                                                                disabled="#{clienteControlador.datoComercialAgregar.idTipoVivienda.id==1? true : false}"
+                                                                >
+                                                    <p:ajax event="blur"/>
+                                                  </p:calendar>
+                                                </div>
+
+                                            </div>
+  
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="otrosDatos" class="col-sm-4 control-label">
+                                                    Otros Datos
+                                                </label>
+                                                
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="otrosDatosDC"
+                                                        
+                                                        value="#{clienteControlador.datoComercialAgregar.otrosDatosDC}"
+                                                        class="form-control"
+                                                        id="otrosDatosDC"/>
+                                                </div>
+                                                
+                                                
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="booleanBtnDC" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtnDC"
+                                                                           value="#{clienteControlador.estadoDatoComercial}" 
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-pane" id="datosAval">
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="aval" class="col-sm-4 control-label">
+                                                    Aval
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{clienteControlador.clienteAgregar.idAval}"
+                                                        id="aval"
+                                                        >
+                                                        <f:selectItem itemValue="#{null}" itemLabel="--Seleccionar Aval--" noSelectionOption="true" />
+                                                        <f:selectItems value="#{clienteControlador.listaAval}"
+                                                                       var="listaCliente"
+                                                                       itemLabel="#{listaCliente.nombreCompleto}"
+                                                                       itemValue="#{listaCliente.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTipoPersonaA" class="col-sm-4 control-label">
+                                                    Tipo Persona(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{clienteControlador.avalAgregar.idTipoPersona.id}"
+                                                        id="txtTipoPersonaA"
+                                                        >
+                                                        <f:selectItems value="#{clienteControlador.listaTipoPersona}"
+                                                                       var="tipoPersona"
+                                                                       itemLabel="#{tipoPersona.nombre}"
+                                                                       itemValue="#{tipoPersona.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTipoDocumentoA" class="col-sm-4 control-label">
+                                                    Tipo de Documento(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{clienteControlador.clienteAgregar.idTipoDocumentoIdentidad.id}"
+                                                        id="txtTipoDocumentoA"
+                                                        >
+                                                        <f:selectItems value="#{clienteControlador.listaTipoDocumentoIdentidad}"
+                                                                       var="tipoDocumento"
+                                                                       itemLabel="#{tipoDocumento.nombreDocumento}"
+                                                                       itemValue="#{tipoDocumento.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNumeroDocumentoA" class="col-sm-4 control-label">
+                                                    Número Documento (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Número Documento"
+                                                        required="true"
+                                                        maxlength="13"
+                                                        onkeypress="return valSoloDigitos(event);"
+                                                        value="#{clienteControlador.avalAgregar.numeroDocumento}"
+                                                        class="form-control"
+                                                        id="txtNumeroDocumentoA">
+                                                        <f:validateLength maximum="13" minimum="8" />
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombresA" class="col-sm-4 control-label">
+                                                    Nombres (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombres"
+                                                        required="true"
+                                                        value="#{clienteControlador.avalAgregar.nombre}"
+                                                        class="form-control"
+                                                        id="txtNombresA"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtApellidoPaternoA" class="col-sm-4 control-label">
+                                                    Apellido Paterno(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Apellido Paterno"
+                                                        required="true"
+                                                        value="#{clienteControlador.avalAgregar.apellidoPaterno}"
+                                                        class="form-control"
+                                                        id="txtApellidoPaternoA"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtApellidoMaternoA" class="col-sm-4 control-label">
+                                                    Apellido Materno
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText
+                                                        label="Apellido Materno"
+                                                        value="#{clienteControlador.avalAgregar.apellidoMaterno}"
+                                                        class="form-control"
+                                                        id="txtApellidoMaternoA"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtDistritoA" class="col-sm-4 control-label">
+                                                    Distrito
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{clienteControlador.avalAgregar.idDistrito.id}"
+                                                        id="txtDistritoA"
+                                                        >
+                                                        <f:selectItems value="#{clienteControlador.listaDistrito}"
+                                                                       var="tipoDistrito"
+                                                                       itemLabel="#{tipoDistrito.nombre}"
+                                                                       itemValue="#{tipoDistrito.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="booleanBtnA" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtnA"
+                                                                           value="#{clienteControlador.estadoClienteA}"
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtTipoPersonaA" class="col-sm-4 control-label">
+                                                    Tipo Vivienda(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{clienteControlador.avalAgregar.idTipoVivienda.id}"
+                                                        id="txtTipoViviendaA"
+                                                        >
+                                                        <f:selectItems value="#{clienteControlador.listaTipoVivienda}"
+                                                                       var="tipoVivienda"
+                                                                       itemLabel="#{tipoVivienda.nombre}"
+                                                                       itemValue="#{tipoVivienda.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtZonaCobranzaA" class="col-sm-4 control-label">
+                                                    Zona de Cobranza
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:selectOneMenu
+                                                        class="form-control"
+                                                        value="#{clienteControlador.avalAgregar.idZonaCobranza.id}"
+                                                        id="txtZonaCobranzaA"
+                                                        >
+                                                        <f:selectItems value="#{clienteControlador.listaZonaCobranza}"
+                                                                       var="zonaCobranza"
+                                                                       itemLabel="#{zonaCobranza.nombre}"
+                                                                       itemValue="#{zonaCobranza.id}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    -->
+                                    
+                                </div>
+                                
+                                <div class="tab-pane" id="datosFoto">                                    
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            <p:fileUpload invalidSizeMessage="Tamaño de archivo no válido"
+                                                          invalidFileMessage="Tipo de archivo no válido" label="Seleccionar"
+                                                          mode="advanced" auto="true" sizeLimit="2048999"
+                                                          allowTypes="/(\.|\/)(jpeg)$/"
+                                                          fileUploadListener="#{clienteControlador.crearHandleFileUpload}" 
+                                                          update="imageTabId" >
+                                            </p:fileUpload>
+                                            <div align="center">
+                                                <p:panel id="imageTabId">
+                                                    <img src="#{clienteControlador.crearBlobToImagen()}" width="auto" height="120"/>
+                                                </p:panel>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{clienteControlador.agregarCliente()}"
+                                        >
+                            Agregar cliente
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

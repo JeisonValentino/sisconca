@@ -1,0 +1,256 @@
+/*@media only screen and (max-width:767px){
+    .main-sidebar,.left-side{
+        padding-top:150px !important;
+    }
+}*/
+
+/*.ui-autocomplete-panel.ui-widget-content.ui-corner-all.ui-helper-hidden.ui-shadow{
+    max-height: 300px !important;
+    top: 270px !important;
+}*/
+
+.kpi-flag{
+    /*background-color: red;*/
+    padding: 5px;
+    font-size: x-large;
+}
+
+.red{
+    /*color: crimson;*/
+    color: red;
+}
+
+.ui-autocomplete-token.ui-state-active.ui-corner-all{
+    max-width: 205px;
+}
+
+.blue{
+    color: cornflowerblue;
+}
+
+#growl_container{
+    z-index: 9999 !important;
+}
+
+.inputNumber{
+    text-align: right;
+}
+
+.centeredMenu{
+    float: none !important;
+    width: 350px;
+    margin: auto;
+}
+
+.subcontainerNavbar2>ul>li>a:hover{
+    background-color: #454749 !important;
+    color: white !important;
+}
+
+.navbar2{
+    width: 100%;
+    overflow: hidden;
+    background-color: #454749;
+    border-bottom: 1px solid #d2d6de;
+}
+
+
+.navbar2 a{
+    padding: 7px !important;
+}
+
+.navbar2 .submenu>li>a>i{
+    color: rgba(175, 97, 20, 1);
+}
+
+.navbar2 .submenu>li>a{
+    color: #D1D1D1 !important;
+}
+
+.subcontainerNavbar2{
+    width: 560px;
+    height: 30px;
+    margin: auto;
+}
+.skin-green .main-header .navbar,
+.skin-green .main-header .logo{
+    background-color: #222d32;
+}
+
+.navbar2 .submenu>li>a:hover>i{
+    color: rgba(175, 97, 20, 1);
+}
+
+.navbar2 .submenu>li>a:hover>span
+{
+    color: rgba(34, 45, 50, 1);
+    text-decoration: underline;
+}
+
+.subcontainerNavbar2 > .submenu > li > a {
+    background-color: #454749;
+}
+
+.navbar2 .submenu>li>a:hover{
+    background-color: transparent !important;
+}
+
+.main-header .navbar, .main-header .logo {
+    background-color: #2F3032 !important;
+    /*background-color: red !important;*/
+
+}
+
+.submenu2{
+    display: none;
+}
+
+.left{
+    float: left!important;
+}
+
+.menuSeleccionado{
+    background-color: #454749 !important;
+    color: white !important;
+}
+
+.navbar.navbar-static-top>a:hover{
+    color: rgba(175, 97, 20, 0.8) !important;
+    background-color: white !important;
+}
+
+/*.main-header .logo-mini:hover{
+    opacity: 0.8;
+}*/
+
+
+/*.main-header .logo-lg:hover{
+    opacity: 0.5;
+}*/
+/*
+.main-header .logo-mini:hover{
+    color: rgba(168, 97, 61, 1);
+}*/
+
+.skin-purple-light .main-header li.user-header{
+    background-color: #2F3032 !important;
+}
+
+.tooltip.left .tooltip-inner {
+    background-color:white;
+    color: black;
+}
+.tooltip.left .tooltip-arrow {
+    border-left-color: white;
+}
+
+.tooltip.top .tooltip-inner {
+    background-color:white;
+    color: black;
+}
+.tooltip.top .tooltip-arrow {
+    border-top-color: white;
+}
+.tooltip.right .tooltip-inner {
+    background-color:white;
+    color: black;
+}
+.tooltip.right .tooltip-arrow {
+    border-right-color: white;
+}
+.tooltip.bottom .tooltip-inner {
+    background-color:white;
+    color: black;
+}
+.tooltip.bottom .tooltip-arrow {
+    border-bottom-color: white;
+}  
+.navbar2 .submenu>li>a.submenuSeleccionado{
+    color: white !important;
+    font-weight: bolder;
+}
+
+/*//Filtrado*/
+.ui-autocomplete-multiple-container.ui-widget.ui-inputfield.ui-state-default.ui-corner-all{
+    width: 100% !important;
+    border-radius: 0px;
+    box-shadow: inset 0 0px 0px white;
+}
+
+.ui-autocomplete.ui-autocomplete-multiple{
+    width: 100% !important;
+}
+
+div:not(.ui-autocomplete) input:focus,
+div:not(.ui-autocomplete) input:hover,
+div:not(.ui-autocomplete) select:hover,
+div:not(.ui-autocomplete) select:focus
+{
+    border: 1px solid #f5ad66;
+}
+
+.ui-autocomplete-input-token input:focus,
+.ui-autocomplete-input-token input:hover
+{
+    border: 0px solid white !important;
+}
+
+/*//efecto logo*/
+img{
+    transition: background-color 1s ;
+    -webkit-transition: background-color 1s ;
+}
+
+/*.logo-lg:hover img{
+    opacity: 0.8;
+    transition: 0.5s;
+}*/
+
+/*
+.main-header:hover img{
+    background-color: #f5ad66 !important;
+}
+*/
+
+
+
+@media only screen and (max-width:550px){
+    .subcontainerNavbar2{
+        width: 350px;
+    }
+}
+
+@media only screen and (min-width: 1200px){
+    .modal-xlg{
+        width: 1200px;
+    }
+}
+
+
+
+/*
+.datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-top{
+    top: 275px !important;
+    left: 10px !important;
+}*/
+
+.contenedorLogoImprimir{
+    padding-left: 35px;
+}
+
+span.alertaa input{
+    background-color: #F06464 !important;color: white!important;
+}
+.alertaa{
+    background-color: #F06464 !important;color: white!important;
+}
+
+span.classInputCorrecto input{
+    background-color: #00a61c !important;
+    color: white !important;
+}
+
+input.classInputCorrecto{
+    background-color: #00a61c !important;
+    color: white !important;
+}

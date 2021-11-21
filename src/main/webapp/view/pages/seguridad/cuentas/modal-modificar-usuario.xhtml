@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                >
+    <div id="modalUsuario"
+         class="modal fade" 
+         role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h:form id="formUsuario" class="form-horizontal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            #{cuentasControlador.perfilPorUsuarioModificar.idUsuario.idEmpleado.nombre}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#informacion" data-toggle="tab" 
+                                       aria-expanded="false">
+                                        Información
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#roles" data-toggle="tab"
+                                       aria-expanded="false">
+                                        Perfiles
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="informacion">
+                                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombreUsuario" class="col-sm-4 control-label">
+                                                    Nombre usuario(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre Usuario"
+                                                        required="true"
+                                                        value="#{cuentasControlador.perfilPorUsuarioModificar.idUsuario.nombre}"
+                                                        class="form-control"
+                                                        id="txtNombreUsuario">
+                                                        <f:validateLength minimum="5" />
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombreUsuario" class="col-sm-4 control-label">
+                                                    Contraseña(*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:password 
+                                                        redisplay="true"
+                                                        label="Contraseña"
+                                                        required="true"
+                                                        value="#{cuentasControlador.perfilPorUsuarioModificar.idUsuario.contrasenia}"
+                                                        class="form-control"
+                                                        id="txtContraseña">
+                                                        <f:validateLength minimum="5" />
+                                                    </p:password>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtNombre" class="col-sm-4 control-label">
+                                                    Nombre (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Nombre Empleado"
+                                                        class="form-control"
+                                                        required="true"
+                                                        readonly="true"
+                                                        value="#{cuentasControlador.perfilPorUsuarioModificar.idUsuario.idEmpleado.nombre}"
+                                                        id="txtNombre"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtApellidos" class="col-sm-4 control-label">
+                                                    Apellido Paterno (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="A. Paterno"
+                                                        class="form-control"
+                                                        required="true"
+                                                        readonly="true"
+                                                        value="#{cuentasControlador.perfilPorUsuarioModificar.idUsuario.idEmpleado.apellidoPaterno}"
+                                                        id="txtApellidoPaterno"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtApellidos" class="col-sm-4 control-label">
+                                                    Apellido Materno (*)
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="A. Materno"
+                                                        readonly="true"
+                                                        class="form-control"
+                                                        value="#{cuentasControlador.perfilPorUsuarioModificar.idUsuario.idEmpleado.apellidoMaterno}"
+                                                        id="txtApellidoMaterno"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="txtCorreoElectronico" class="col-sm-4 control-label">
+                                                    Correo Electrónico
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Correo Electrónico"
+                                                        class="form-control"
+                                                        readonly="true"
+                                                        value="#{cuentasControlador.perfilPorUsuarioModificar.idUsuario.idEmpleado.correo}"
+                                                        id="txtCorreoElectronico"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="txtNumeroTelefono" class="col-sm-4 control-label">
+                                                    Número de Teléfono
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <h:inputText 
+                                                        label="Número Telefónico"
+                                                        class="form-control"
+                                                        readonly="true"
+                                                        value="#{cuentasControlador.perfilPorUsuarioModificar.idUsuario.idEmpleado.telefono}"
+                                                        id="txtNumeroTelefono"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="txtNumeroTelefono" class="col-sm-4 control-label">
+                                                    ¿Está Activo?
+                                                </label>
+                                                <div class="col-sm-6">
+                                                    <p:selectBooleanButton id="booleanBtn"
+                                                                           value="#{cuentasControlador.estadoUsuario}"
+                                                                           onLabel="Yes"
+                                                                           offLabel="No"
+                                                                           onIcon="ui-icon-check"
+                                                                           offIcon="ui-icon-close"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="roles">
+                                    <div class="row">
+                                        <div class="col-sm-1"/>
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-8" align="center">
+                                            <div class="form-group">
+                                                <p:dataTable
+                                                    selection="#{cuentasControlador.listaPerfilesSeleccionadosModificar}"
+                                                    rowKey="#{perfil.id}"
+                                                    style="margin-bottom:0;width: 50%"
+                                                    value="#{cuentasControlador.listaPerfiles}"
+                                                    var="perfil"
+                                                    >
+                                                    <p:column selectionMode="multiple" 
+                                                              style="width:40px;text-align:center"/>
+                                                    <p:column
+                                                        headerText="Perfiles"
+                                                        >
+                                                        <h:outputText value="#{perfil.nombre}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                    <div class="modal-footer">
+                        <p:commandLink  class="btn btn-default"
+                                        actionListener="#{cuentasControlador.actualizarUsuario()}"
+                                        >
+                            Actualizar Datos
+                        </p:commandLink>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

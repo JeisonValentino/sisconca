@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <aside
+        id="menuDerecha" 
+        class="control-sidebar control-sidebar-dark" 
+        style="position: fixed; height: auto;">
+        <div class="tab-content">
+            <div id="control-sidebar-theme-demo-options-tab" class="tab-pane active">
+                <h:form  
+                    >
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel value="Filtrar pagos:"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel value="Inicio" />
+                                <br />
+                                <p:calendar id="filterStart" value="#{paymentController.start}" readonlyInput="true" pattern="MM/dd/yyyy" >
+                                    <p:ajax event="blur"/>
+                                </p:calendar><br />
+                                <p:outputLabel value="Fin" />
+                                <br />
+                                <p:calendar id="filterEnd" value="#{paymentController.end}" readonlyInput="true" pattern="MM/d/yyyy">
+                                    <p:ajax event="blur"/>
+                                </p:calendar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel value="Cliente"/>
+                                <h:selectOneMenu
+                                    class="form-control"
+                                    value="#{paymentController.payment.prestamo.idCliente.id}"
+                                    id="txtCliente"
+                                    >
+                                    <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                    <f:selectItems value="#{paymentController.clientes}"
+                                                   var="cliente"
+                                                   itemLabel="#{cliente.nombreCompleto}"
+                                                   itemValue="#{cliente.id}"/>
+                                    <p:ajax event="change"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel
+                                    value="Sede"
+                                    />
+                                <h:selectOneMenu
+                                    class="form-control"
+                                    value="#{paymentController.payment.prestamo.idSede.id}"
+                                    id="selectSedeFiltro"
+                                    >
+                                    <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                    <f:selectItems value="#{paymentController.listaSede}"
+                                                   var="sede"
+                                                   itemLabel="#{sede.nombre}"
+                                                   itemValue="#{sede.id}"/>
+                                    <p:ajax event="change"/>
+                                    
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:commandLink
+                                    style="width: 100%; color: white"
+                                    value="Filtrar"
+                                    class="btn btn-primary"
+                                    >
+                                    <p:ajax listener="#{paymentController.filter}" update="formListPayments" />
+                                </p:commandLink>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:outputLabel value="Número"/>
+                                <h:inputText class="form-control"
+                                             label="Código"
+                                             value="#{paymentController.idPrestamo}"></h:inputText>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p:commandLink
+                                    style="width: 100%; color: white"
+                                    value="Imprimir Reporte PDF"
+                                    action="#{paymentController.downloadFile()}"
+                                    ajax="false"
+                                    class="btn btn-primary">
+                                </p:commandLink>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div> 
+        </div>
+    </aside>
+</ui:composition>

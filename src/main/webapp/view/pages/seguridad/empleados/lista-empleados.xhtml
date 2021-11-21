@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+
+    <section class="content-header">
+        <h1>
+            Empleados
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a >
+                    <i class="fa fa-dashboard">
+                    </i> Inicio
+                </a>
+            </li>
+            <li class="active">Empleados</li>
+        </ol>
+    </section>
+    <section  class="content">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <p:commandButton
+                            title="Al presionar, se mostrara un panel al lado derecho de la pantalla en donde se podra realizar busquedas personalizadas."
+                            onclick="agregarControlSidebarABody();"
+                            actionListener="#"
+                            value="Mostrar Filtro"
+                            icon="fa fa-eye"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                        <p:commandButton
+                            title="Al presiona, se actualizara la lista de empleados."
+                            actionListener="#{empleadoControlador.iniciarListaEmpleados()}"
+                            value="Actualizar Registros"
+                            icon="fa fa-refresh"
+                            class="btn"
+                            >
+                        </p:commandButton>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h:form id="formListaEmpleados">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">
+                                    Lista de empleados
+                                </h3>
+                                <div class="box-tools pull-right">
+                                    <p:commandLink
+                                        rendered="#{navegadorControlador.empleado_Agregar}"
+                                        actionListener="#{empleadoControlador.mostrarModalAgregarEmpleado()}"
+                                        class="btn btn-success"
+                                        >
+                                        <i class="fa fa-plus"/> Agregar empleado
+                                    </p:commandLink>
+                                </div>
+                            </div>
+                            <div class="box-body" style="display: block;">
+                                <p:dataTable
+                                    id="dataTableEmpleado"
+                                    reflow="true"
+                                    rowIndexVar="index"
+                                    lazy="true"
+                                    rows="10" 
+                                    paginator="true"
+                                    paginatorPosition="bottom"
+                                    currentPageReportTemplate="Total Registros ( {totalRecords} )"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                    {PreviousPageLink} {PageLinks} {NextPageLink} 
+                                    {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                    rowsPerPageTemplate="10,20,50,100"
+                                    value="#{empleadoControlador.listaLazyEmpleados}"
+                                    rendered="#{navegadorControlador.empleado_Listar}"
+                                    var="empleado"
+                                    >
+                                    <f:facet name="header">
+                                        <h:outputText value="Lista de Empleados"/>
+                                    </f:facet>
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <p:graphicImage 
+                                                value="resources/imagenes/iconos/excel.png"
+                                                width="24"/>
+                                            <pe:exporter type="xlsx"
+                                                         postProcessor="#{utilitarioControlador.personalizarExcel}"
+                                                         target="dataTableEmpleado"
+                                                         fileName="Empleado Listado" />
+                                        </h:commandLink>
+
+                                        <h:commandLink>
+                                            <p:graphicImage 
+                                                value="resources/imagenes/iconos/pdf.png" 
+                                                width="24"/>
+                                            <pe:exporter type="pdf" encoding="cp1250" preProcessor="#{utilitarioControlador.personalizarPdf}" 
+                                                         facetBackground="#af6114" 
+                                                         facetFontColor="#FFFFFF"  
+
+                                                         target="dataTableEmpleado" 
+                                                         fileName="Empleado Listado"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                                    <p:column 
+                                        exportable="false"
+                                        width="30"
+                                        headerText="#">
+                                        #{index + 1}
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Sede"/>
+                                        </f:facet>
+                                        <h:outputText value="#{empleado.idSede.nombre}"/>
+                                    </p:column>
+                                    <p:column
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{empleado.nombreCompleto}"/>
+                                    </p:column>
+                                    <p:column
+                                        style="text-align: center"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Número Documento"/>
+                                        </f:facet>
+                                        <h:outputText value="#{empleado.numeroDocumento}"/>
+                                    </p:column>
+                                    <p:column
+                                        style="text-align: center"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Telefono"/>
+                                        </f:facet>
+                                        <h:outputText value="#{empleado.telefono}"/>
+                                    </p:column>
+                                    <p:column
+                                        style="text-align: center"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Sede"/>
+                                        </f:facet>
+                                        <h:outputText value="#{empleado.idSede.nombre}"/>
+                                    </p:column>
+                                    <p:column
+                                        style="text-align: center"
+                                        >
+                                        <f:facet name="header">
+                                            <h:outputText value="Estado"/>
+                                        </f:facet>
+                                        <h:outputText value="#{empleado.idEstado.nombre}"/>
+                                    </p:column>
+                                    <p:column
+                                        exportable="false"
+                                        rendered="#{navegadorControlador.empleado_Modificar}"
+                                        width="40"
+                                        style="text-align: center"
+                                        >
+                                        <p:commandLink
+                                            actionListener="#{empleadoControlador.mostrarModalModificarEmpleado(empleado)}"
+                                            title="Modificar Empleado"
+                                            >
+                                            <i class="fa fa-pencil"/>
+                                        </p:commandLink>
+                                    </p:column>
+                                    <p:column
+                                        exportable="false"
+                                        rendered="#{navegadorControlador.empleado_Inhabilitar}"
+                                        width="40"
+                                        style="text-align: center"
+                                        >
+                                        <p:commandLink
+                                            rendered="#{empleado.idEstado.id eq empleadoControlador.activo?true:false}"
+                                            actionListener="#{empleadoControlador.mostrarModalInhabilitarEmpleado(empleado)}"
+                                            title="Inhabilitar Empleado"
+                                            >
+                                            <i class="fa fa-lock"/>
+                                        </p:commandLink>
+                                        <p:commandLink
+                                            rendered="#{empleado.idEstado.id eq empleadoControlador.inactivo?true:false}"
+                                            actionListener="#{empleadoControlador.mostrarModalHabilitarEmpleado(empleado)}"
+                                            title="Habilitar Empleado"
+                                            >
+                                            <i class="fa fa-unlock"/>
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div jsf:id="divModalEmpleado">
+        <ui:include src="#{empleadoControlador.contenidoModalEmpleado}"/>
+    </div>
+
+</ui:composition>
